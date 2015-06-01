@@ -5,8 +5,10 @@ import lombok.Setter;
 import org.vtsukur.spring.rest.market.domain.BaseEntity;
 
 import javax.persistence.Entity;
+import javax.persistence.Lob;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.time.LocalDateTime;
 
 /**
  * @author volodymyr.tsukur
@@ -16,6 +18,9 @@ import java.math.BigInteger;
 @Setter
 public class Offer extends BaseEntity {
 
+    @Lob
+    private LocalDateTime published;
+
     private Type type;
 
     private Currency currency;
@@ -23,6 +28,8 @@ public class Offer extends BaseEntity {
     private BigDecimal rate;
 
     private BigInteger amount;
+
+    private Status status;
 
     public enum Type {
 
@@ -39,6 +46,16 @@ public class Offer extends BaseEntity {
         EUR,
 
         UAH
+
+    }
+
+    public enum Status {
+
+        NEW,
+
+        PUBLISHED,
+
+        OUTDATED
 
     }
 
