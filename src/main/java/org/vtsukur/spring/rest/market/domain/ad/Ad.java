@@ -1,4 +1,4 @@
-package org.vtsukur.spring.rest.market.domain.offer;
+package org.vtsukur.spring.rest.market.domain.ad;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Setter
-public class Offer extends BaseEntity {
+public class Ad extends BaseEntity {
 
     @Lob
     private LocalDateTime published;

@@ -4,7 +4,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.data.repository.init.AbstractRepositoryPopulatorFactoryBean;
 import org.springframework.data.repository.init.Jackson2ResourceReader;
 import org.springframework.data.repository.init.ResourceReader;
-import org.vtsukur.spring.rest.market.domain.offer.Offer;
+import org.vtsukur.spring.rest.market.domain.ad.Ad;
 import org.vtsukur.spring.rest.market.domain.user.User;
 
 import java.util.ArrayList;
@@ -29,16 +29,16 @@ public class CustomRepositoryPopulator extends AbstractRepositoryPopulatorFactor
 
             Collection<Object> results = new ArrayList<>();
             Collection<User> users = new ArrayList<>();
-            Collection<Offer> offers = new ArrayList<>();
+            Collection<Ad> ads = new ArrayList<>();
 
             collection.forEach(o -> {
                 User user = (User) o;
                 users.add(user);
 
-                offers.addAll(user.getOffers());
+                ads.addAll(user.getAds());
             });
 
-            results.addAll(offers);
+            results.addAll(ads);
             results.addAll(users);
 
             return results;
