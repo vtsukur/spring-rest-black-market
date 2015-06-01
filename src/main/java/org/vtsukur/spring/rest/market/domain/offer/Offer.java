@@ -5,10 +5,8 @@ import lombok.Setter;
 import org.vtsukur.spring.rest.market.domain.BaseEntity;
 
 import javax.persistence.Entity;
-import javax.persistence.Lob;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.time.LocalDateTime;
 
 /**
  * @author volodymyr.tsukur
@@ -17,9 +15,6 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class Offer extends BaseEntity {
-
-    @Lob
-    private LocalDateTime time;
 
     private Type type;
 
