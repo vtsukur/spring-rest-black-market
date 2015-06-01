@@ -1,6 +1,6 @@
 [
   {
-    "_class": "org.vtsukur.spring.rest.market.domain.User",
+    "_class": "org.vtsukur.spring.rest.market.domain.user.User",
     "phoneNumber": "+380681854104"
   }
 ]

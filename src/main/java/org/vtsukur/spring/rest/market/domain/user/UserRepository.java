@@ -1,4 +1,4 @@
-package org.vtsukur.spring.rest.market.domain;
+package org.vtsukur.spring.rest.market.domain.user;
 
 import org.springframework.data.repository.PagingAndSortingRepository;
 

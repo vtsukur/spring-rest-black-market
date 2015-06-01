@@ -1,6 +1,6 @@
 [
   {
-    "_class": "org.vtsukur.spring.rest.market.domain.Offer",
+    "_class": "org.vtsukur.spring.rest.market.domain.offer.Offer",
     "time": [
       2015,
       6,
