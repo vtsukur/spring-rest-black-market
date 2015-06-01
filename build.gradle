@@ -35,6 +35,6 @@ repositories {
 dependencies {
   // Domain Model + Spring Data JPA
   compile("org.springframework.boot:spring-boot-starter-data-jpa")
-  compile("org.hsqldb:hsqldb:2.3.2")
+  compile("org.hsqldb:hsqldb")
   compile("org.projectlombok:lombok:1.16.4")
 }
