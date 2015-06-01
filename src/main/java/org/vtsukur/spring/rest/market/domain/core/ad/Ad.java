@@ -33,7 +33,7 @@ public class Ad extends BaseEntity {
 
     private String comment;
 
-    private Status status;
+    private Status status = Status.NEW;
 
     public enum Type {
 
