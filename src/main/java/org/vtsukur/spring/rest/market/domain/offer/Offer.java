@@ -1,7 +1,8 @@
-package org.vtsukur.spring.rest.market.domain;
+package org.vtsukur.spring.rest.market.domain.offer;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.vtsukur.spring.rest.market.domain.BaseEntity;
 
 import javax.persistence.Entity;
 import javax.persistence.Lob;
