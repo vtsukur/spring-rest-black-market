@@ -1,5 +1,7 @@
 package org.vtsukur.spring.rest.market.util;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JSR310Module;
 import org.springframework.core.io.Resource;
 import org.springframework.data.repository.init.AbstractRepositoryPopulatorFactoryBean;
 import org.springframework.data.repository.init.Jackson2ResourceReader;
@@ -9,6 +11,8 @@ import org.vtsukur.spring.rest.market.domain.core.user.User;
 
 import java.util.ArrayList;
 import java.util.Collection;
+
+import static com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES;
 
 /**
  * @author volodymyr.tsukur
@@ -24,7 +28,10 @@ public class CustomRepositoryPopulator extends AbstractRepositoryPopulatorFactor
 
         @Override
         public Object readFrom(Resource resource, ClassLoader classLoader) throws Exception {
-            Jackson2ResourceReader jsonReader = new Jackson2ResourceReader();
+            ObjectMapper objectMapper = new ObjectMapper();
+            objectMapper.registerModule(new JSR310Module());
+            objectMapper.configure(FAIL_ON_UNKNOWN_PROPERTIES, false);
+            Jackson2ResourceReader jsonReader = new Jackson2ResourceReader(objectMapper);
             Collection collection = (Collection) jsonReader.readFrom(resource, classLoader);
 
             Collection<Object> results = new ArrayList<>();
