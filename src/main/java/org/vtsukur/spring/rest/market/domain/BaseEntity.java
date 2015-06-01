@@ -2,7 +2,6 @@ package org.vtsukur.spring.rest.market.domain;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import org.springframework.hateoas.Identifiable;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -14,7 +13,7 @@ import javax.persistence.MappedSuperclass;
 @MappedSuperclass
 @Getter
 @EqualsAndHashCode
-public abstract class BaseEntity implements Identifiable<Long> {
+public abstract class BaseEntity {
 
     @Id
     @GeneratedValue
