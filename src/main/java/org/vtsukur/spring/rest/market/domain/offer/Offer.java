@@ -23,11 +23,11 @@ public class Offer extends BaseEntity {
 
     private Type type;
 
+    private BigInteger amount;
+
     private Currency currency;
 
     private BigDecimal rate;
-
-    private BigInteger amount;
 
     private Status status;
 
