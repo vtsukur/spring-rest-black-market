@@ -29,6 +29,10 @@ public class Ad extends BaseEntity {
 
     private BigDecimal rate;
 
+    private Location location;
+
+    private String comment;
+
     private Status status;
 
     public enum Type {
