@@ -4,8 +4,8 @@ import org.springframework.core.io.Resource;
 import org.springframework.data.repository.init.AbstractRepositoryPopulatorFactoryBean;
 import org.springframework.data.repository.init.Jackson2ResourceReader;
 import org.springframework.data.repository.init.ResourceReader;
-import org.vtsukur.spring.rest.market.domain.ad.Ad;
-import org.vtsukur.spring.rest.market.domain.user.User;
+import org.vtsukur.spring.rest.market.domain.core.ad.Ad;
+import org.vtsukur.spring.rest.market.domain.core.user.User;
 
 import java.util.ArrayList;
 import java.util.Collection;

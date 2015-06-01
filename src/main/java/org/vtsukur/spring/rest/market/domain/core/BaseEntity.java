@@ -1,4 +1,4 @@
-package org.vtsukur.spring.rest.market.domain;
+package org.vtsukur.spring.rest.market.domain.core;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

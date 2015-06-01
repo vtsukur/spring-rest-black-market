@@ -1,10 +1,10 @@
 [
   {
-    "_class": "org.vtsukur.spring.rest.market.domain.user.User",
+    "_class": "org.vtsukur.spring.rest.market.domain.core.user.User",
     "phoneNumber": "+380681854104",
     "ads": [
       {
-        "_class": "org.vtsukur.spring.rest.market.domain.ad.Ad",
+        "_class": "org.vtsukur.spring.rest.market.domain.core.ad.Ad",
         "type": "BUY",
         "currency": "USD",
         "rate": "21.5",
