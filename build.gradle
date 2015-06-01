@@ -33,8 +33,13 @@ repositories {
 }
 
 dependencies {
-  // Domain Model + Spring Data JPA
+  // For domain modeling and Spring Data JPA.
   compile("org.springframework.boot:spring-boot-starter-data-jpa")
   compile("org.hsqldb:hsqldb")
   compile("org.projectlombok:lombok:1.16.4")
+
+  // Initial test dependencies.
+  testCompile("org.springframework.boot:spring-boot-starter-test")
+  testCompile("junit:junit:4.12")
+  testCompile("com.jayway.jsonpath:json-path:2.0.0")
 }
