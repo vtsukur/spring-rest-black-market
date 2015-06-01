@@ -3,7 +3,7 @@ package org.vtsukur.spring.rest.market.domain.user;
 import lombok.Getter;
 import lombok.Setter;
 import org.vtsukur.spring.rest.market.domain.BaseEntity;
-import org.vtsukur.spring.rest.market.domain.offer.Offer;
+import org.vtsukur.spring.rest.market.domain.ad.Ad;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
@@ -21,6 +21,6 @@ public class User extends BaseEntity {
     private String phoneNumber;
 
     @OneToMany
-    private Set<Offer> offers = new HashSet<>();
+    private Set<Ad> ads = new HashSet<>();
 
 }
