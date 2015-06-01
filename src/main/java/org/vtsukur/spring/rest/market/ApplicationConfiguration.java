@@ -17,13 +17,7 @@ public class ApplicationConfiguration {
     @Bean
     public CustomRepositoryPopulator repositoryPopulator() {
         CustomRepositoryPopulator factory = new CustomRepositoryPopulator();
-//        ObjectMapper mapper = new ObjectMapper();
-//        mapper.configure(FAIL_ON_UNKNOWN_PROPERTIES, false);
-//        mapper.registerModule(newJSR310Module());
-//        factory.setMapper(mapper);
-        factory.setResources(new Resource[]{
-                new ClassPathResource("data.json")
-        });
+        factory.setResources(new Resource[]{ new ClassPathResource("data.json") });
         return factory;
     }
 
