@@ -1,4 +1,4 @@
-package org.vtsukur.spring.rest.market.domain.user;
+package org.vtsukur.spring.rest.market.domain.core.user;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.rest.core.annotation.RestResource;
