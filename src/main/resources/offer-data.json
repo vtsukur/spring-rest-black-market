@@ -1,9 +1,0 @@
-[
-  {
-    "_class": "org.vtsukur.spring.rest.market.domain.offer.Offer",
-    "type": "BUY",
-    "currency": "USD",
-    "rate": "21.5",
-    "amount": 3000
-  }
-]
