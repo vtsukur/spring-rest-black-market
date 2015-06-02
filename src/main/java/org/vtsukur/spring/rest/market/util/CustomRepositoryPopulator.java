@@ -32,6 +32,7 @@ public class CustomRepositoryPopulator extends AbstractRepositoryPopulatorFactor
             objectMapper.registerModule(new JSR310Module());
             objectMapper.configure(FAIL_ON_UNKNOWN_PROPERTIES, false);
             Jackson2ResourceReader jsonReader = new Jackson2ResourceReader(objectMapper);
+
             Collection collection = (Collection) jsonReader.readFrom(resource, classLoader);
 
             Collection<Object> results = new ArrayList<>();
@@ -39,14 +40,13 @@ public class CustomRepositoryPopulator extends AbstractRepositoryPopulatorFactor
             Collection<Ad> ads = new ArrayList<>();
 
             collection.forEach(o -> {
-                User user = (User) o;
-                users.add(user);
-
-                ads.addAll(user.getAds());
+                Ad ad = (Ad) o;
+                ads.add(ad);
+                users.add(ad.getUser());
             });
 
-            results.addAll(ads);
             results.addAll(users);
+            results.addAll(ads);
 
             return results;
         }
