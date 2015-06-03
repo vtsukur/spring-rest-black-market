@@ -19,13 +19,6 @@ import java.time.LocalDateTime;
 @Setter
 public class Ad extends BaseEntity {
 
-    @ManyToOne
-    @JoinColumn(nullable = false)
-    private User user;
-
-    @Convert(converter = LocalDateTimeConverter.class)
-    private LocalDateTime publishedAt;
-
     @Column(nullable = false)
     private Type type;
 
@@ -38,12 +31,19 @@ public class Ad extends BaseEntity {
     @Column(nullable = false)
     private BigDecimal rate;
 
+    @ManyToOne
+    @JoinColumn(nullable = false)
+    private User user;
+
     private Location location;
 
     private String comment;
 
     @Column(nullable = false)
     private Status status = Status.NEW;
+
+    @Convert(converter = LocalDateTimeConverter.class)
+    private LocalDateTime publishedAt;
 
     public enum Type {
 
