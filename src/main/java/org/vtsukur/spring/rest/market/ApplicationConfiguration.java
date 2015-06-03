@@ -18,13 +18,6 @@ public class ApplicationConfiguration {
         return (o) -> dataLoader.load();
     }
 
-//    @Bean
-//    public CustomRepositoryPopulator repositoryPopulator() {
-//        CustomRepositoryPopulator factory = new CustomRepositoryPopulator();
-//        factory.setResources(new Resource[]{ new ClassPathResource("data.json") });
-//        return factory;
-//    }
-
     @Bean
     public Module newJSR310Module() {
         return new JSR310Module();
