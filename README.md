@@ -26,15 +26,7 @@ Navigate to [http://localhost:8080](http://localhost:8080) and surf through the 
 
 Recommended version of the IDE is 14+
 
-Generate IDE files by running the following shell command on Linux / Unix systems:
-
-    ./gradlew idea
-
-This is the respective shell command to run Windows:
-
-    gradlew idea
-
-Alternatively, just import the `build.gradle` from the IDE itself using *File -> Open ...*
+Just import `build.gradle` file from the IDE itself using *File -> Open ...*
 
 Make sure that annotation processors are enabled and received from the project classpath.
 When using IntelliJ IDEA 14 this feature is activated in
