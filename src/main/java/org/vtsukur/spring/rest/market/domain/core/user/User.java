@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.vtsukur.spring.rest.market.domain.core.BaseEntity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 
 /**
@@ -14,6 +15,7 @@ import javax.persistence.Entity;
 @Setter
 public class User extends BaseEntity {
 
+    @Column(nullable = false)
     private String phoneNumber;
 
 }
