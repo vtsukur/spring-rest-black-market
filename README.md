@@ -36,9 +36,9 @@ This is the respective shell command to run Windows:
 
 Alternatively, just import the `build.gradle` from the IDE itself using *File -> Open ...*
 
-Make sure that *Annotation Processors* are enabled and received from the project classpath
-(for IntelliJ IDEA 14 this is activated in
+Make sure that annotation processors are enabled and received from the project classpath.
+When using IntelliJ IDEA 14 this feature is activated in
 *Preferences* screen under *Build, Execution, Deployment -> Compiler -> Annotation Processors*
 path where *Enable annotation processing* must be checked and
-*Obtain processors from project classpath* option must be selected).
+*Obtain processors from project classpath* option must be selected.
 This is utterly important for the project to compile.
