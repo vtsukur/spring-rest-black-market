@@ -21,7 +21,7 @@
     "status": "PUBLISHED",
     "user": {
       "_class": "org.vtsukur.spring.rest.market.domain.core.user.User",
-      "phoneNumber": "+380681854104"
+      "phoneNumber": "0681854104"
     }
   }
 ]
