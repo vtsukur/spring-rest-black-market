@@ -73,4 +73,14 @@ public class Ad extends BaseEntity {
 
     }
 
+    public void publish() {
+        if (status == Ad.Status.NEW) {
+            status = Ad.Status.PUBLISHED;
+            publishedAt = LocalDateTime.now();
+        }
+        else {
+            throw new InvalidAdStateTransitionException();
+        }
+    }
+
 }
