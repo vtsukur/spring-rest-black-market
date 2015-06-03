@@ -6,10 +6,7 @@ import org.vtsukur.spring.rest.market.domain.core.BaseEntity;
 import org.vtsukur.spring.rest.market.domain.core.user.User;
 import org.vtsukur.spring.rest.market.infrastructure.LocalDateTimeConverter;
 
-import javax.persistence.Convert;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.time.LocalDateTime;
@@ -29,18 +26,23 @@ public class Ad extends BaseEntity {
     @Convert(converter = LocalDateTimeConverter.class)
     private LocalDateTime publishedAt;
 
+    @Column(nullable = false)
     private Type type;
 
+    @Column(nullable = false)
     private BigInteger amount;
 
+    @Column(nullable = false)
     private Currency currency;
 
+    @Column(nullable = false)
     private BigDecimal rate;
 
     private Location location;
 
     private String comment;
 
+    @Column(nullable = false)
     private Status status = Status.NEW;
 
     public enum Type {
