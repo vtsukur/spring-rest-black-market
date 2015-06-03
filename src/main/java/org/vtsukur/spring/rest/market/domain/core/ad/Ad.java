@@ -61,7 +61,7 @@ public class Ad extends BaseEntity {
 
         EUR,
 
-        UAH
+        RUB
 
     }
 
