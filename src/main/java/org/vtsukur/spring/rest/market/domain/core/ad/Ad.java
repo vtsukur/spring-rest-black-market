@@ -2,6 +2,7 @@ package org.vtsukur.spring.rest.market.domain.core.ad;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.vtsukur.spring.rest.market.domain.core.BaseEntity;
 import org.vtsukur.spring.rest.market.domain.core.user.User;
 import org.vtsukur.spring.rest.market.infrastructure.LocalDateTimeConverter;
@@ -17,6 +18,7 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Setter
+@ToString(callSuper = true)
 public class Ad extends BaseEntity {
 
     @Column(nullable = false)
