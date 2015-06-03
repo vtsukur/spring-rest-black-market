@@ -19,4 +19,11 @@ public class AdService {
         return ad;
     }
 
+    public Ad finish(Long id) throws InvalidAdStateTransitionException {
+        Ad ad = adRepository.findOne(id);
+        ad.finish();
+        adRepository.save(ad);
+        return ad;
+    }
+
 }

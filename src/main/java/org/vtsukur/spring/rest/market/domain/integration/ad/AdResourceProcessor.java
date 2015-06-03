@@ -27,6 +27,9 @@ public class AdResourceProcessor implements ResourceProcessor<Resource<Ad>> {
             resource.add(entityLinks.linkToSingleResource(ad).withRel("delete"));
             resource.add(linkTo(methodOn(AdResourceController.class).publish(ad.getId(), null)).withRel("publish"));
         }
+        if (ad.getStatus() == Ad.Status.PUBLISHED) {
+            resource.add(linkTo(methodOn(AdResourceController.class).finish(ad.getId(), null)).withRel("finish"));
+        }
         return resource;
     }
 
