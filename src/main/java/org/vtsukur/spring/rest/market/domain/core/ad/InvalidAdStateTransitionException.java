@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(HttpStatus.CONFLICT)
 public class InvalidAdStateTransitionException extends RuntimeException {
 
-    public InvalidAdStateTransitionException() {
-        super();
+    public InvalidAdStateTransitionException(String message) {
+        super(message);
     }
 
 }
