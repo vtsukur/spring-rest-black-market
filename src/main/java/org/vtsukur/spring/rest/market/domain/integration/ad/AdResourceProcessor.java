@@ -7,6 +7,9 @@ import org.springframework.hateoas.ResourceProcessor;
 import org.springframework.stereotype.Component;
 import org.vtsukur.spring.rest.market.domain.core.ad.Ad;
 
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
+
 /**
  * @author volodymyr.tsukur
  */
@@ -22,6 +25,7 @@ public class AdResourceProcessor implements ResourceProcessor<Resource<Ad>> {
         if (ad.getStatus() == Ad.Status.NEW) {
             resource.add(entityLinks.linkToSingleResource(ad).withRel("update"));
             resource.add(entityLinks.linkToSingleResource(ad).withRel("delete"));
+            resource.add(linkTo(methodOn(AdResourceController.class).publish(ad.getId(), null)).withRel("publish"));
         }
         return resource;
     }
