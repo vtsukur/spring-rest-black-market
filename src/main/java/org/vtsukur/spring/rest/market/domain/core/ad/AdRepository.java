@@ -12,6 +12,9 @@ import org.vtsukur.spring.rest.market.domain.core.user.User;
  */
 public interface AdRepository extends PagingAndSortingRepository<Ad, Long> {
 
+    @RestResource(rel = "consumer", path = "consumer")
+    Page<Ad> findByTypeAndCurrency(@Param("type") Ad.Type type, @Param("currency") Ad.Currency currency, Pageable pageable);
+
     @RestResource(rel = "by-user", path = "by-user")
     Page<Ad> findByUser(@Param("value") User user, Pageable pageable);
 
