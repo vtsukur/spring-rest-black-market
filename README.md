@@ -34,3 +34,12 @@ When using IntelliJ IDEA 14 this feature is activated in
 path where *Enable annotation processing* must be checked and
 *Obtain processors from project classpath* option must be selected.
 This is utterly important for the project to compile.
+
+Boot up the server by locating `Application` class
+and running it as *Application* or *Spring Boot*.
+
+#### Static Content
+
+All static content put under `src/main/resources/static` will be exposed automatically
+(like any other application based on Spring Boot).
+To hot deploy static sources just trigger compilation in the IDE and refresh the page in the browser.
