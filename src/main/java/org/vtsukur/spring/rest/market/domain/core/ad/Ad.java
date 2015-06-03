@@ -74,12 +74,23 @@ public class Ad extends BaseEntity {
     }
 
     public void publish() {
-        if (status == Ad.Status.NEW) {
-            status = Ad.Status.PUBLISHED;
+        if (status == Status.NEW) {
+            status = Status.PUBLISHED;
             publishedAt = LocalDateTime.now();
         }
         else {
-            throw new InvalidAdStateTransitionException("Ad is published only when it is new");
+            throw new InvalidAdStateTransitionException(
+                    "Ad is already published");
+        }
+    }
+
+    public void finish() {
+        if (status == Status.PUBLISHED) {
+            status = Status.OUTDATED;
+        }
+        else {
+            throw new InvalidAdStateTransitionException(
+                    "Ad can be finished only when it is in the " + Status.PUBLISHED + " state");
         }
     }
 
