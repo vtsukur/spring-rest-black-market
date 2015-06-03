@@ -1,5 +1,7 @@
 # spring-rest-black-market
 
+[Build status](https://travis-ci.org/vtsukur/spring-rest-black-market.svg?branch=master)
+
 ## Building and Running
 
 Make sure that [Java 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) is installed and is on the path.
