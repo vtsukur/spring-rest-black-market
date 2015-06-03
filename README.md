@@ -1,6 +1,6 @@
 # spring-rest-black-market
 
-[Build status](https://travis-ci.org/vtsukur/spring-rest-black-market.svg?branch=master)
+![Build status](https://travis-ci.org/vtsukur/spring-rest-black-market.svg?branch=master)
 
 ## Building and Running
 
