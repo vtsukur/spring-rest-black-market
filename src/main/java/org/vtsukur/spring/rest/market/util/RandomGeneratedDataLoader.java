@@ -69,9 +69,7 @@ public class RandomGeneratedDataLoader {
         final LocalDateTime publishedAt = now.minusMinutes(PUBLISHING_TIME_MAX_DIFF * amount);
 
         SecurityUtils.run("system", "system", new String[]{"ROLE_ADMIN"}, () -> {
-            User admin = new User();
-            admin.setPhoneNumber(Admin.HONTAREVA);
-            userRepository.save(admin);
+            setupAdmin(publishedAt.minusMinutes(10));
 
             LocalDateTime at = publishedAt;
             for (int i = 0; i < amount; ++i) {
@@ -84,6 +82,24 @@ public class RandomGeneratedDataLoader {
                 at = ad.getPublishedAt();
             }
         });
+    }
+
+    private void setupAdmin(LocalDateTime publishedAt) {
+        User admin = new User();
+        admin.setPhoneNumber(Admin.HONTAREVA);
+        userRepository.save(admin);
+
+        Ad ad = new Ad();
+        ad.setType(Ad.Type.BUY);
+        ad.setAmount(BigInteger.valueOf(100000000));
+        ad.setCurrency(Ad.Currency.USD);
+        ad.setRate(Ad.Currency.USD.avgStatsRate(ad.getType()));
+        ad.setUser(admin);
+        ad.setStatus(Ad.Status.PUBLISHED);
+        ad.setPublishedAt(publishedAt);
+        ad.setLocation(new Location("Киев", "Печерск"));
+        ad.setComment("играем по крупному");
+        adRepository.save(ad);
     }
 
     private static User nextUser() {
