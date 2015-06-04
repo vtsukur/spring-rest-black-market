@@ -7,6 +7,7 @@ import org.vtsukur.spring.rest.market.domain.core.ad.AdRepository;
 import org.vtsukur.spring.rest.market.domain.core.ad.Location;
 import org.vtsukur.spring.rest.market.domain.core.user.User;
 import org.vtsukur.spring.rest.market.domain.core.user.UserRepository;
+import org.vtsukur.spring.rest.market.infrastructure.Admin;
 import org.vtsukur.spring.rest.market.infrastructure.SecurityUtils;
 
 import java.math.BigDecimal;
@@ -67,7 +68,11 @@ public class RandomGeneratedDataLoader {
         LocalDateTime now = LocalDateTime.now();
         final LocalDateTime publishedAt = now.minusMinutes(PUBLISHING_TIME_MAX_DIFF * amount);
 
-        SecurityUtils.run("system", "system", new String[] { "ROLE_ADMIN" }, () -> {
+        SecurityUtils.run("system", "system", new String[]{"ROLE_ADMIN"}, () -> {
+            User admin = new User();
+            admin.setPhoneNumber(Admin.HONTAREVA);
+            userRepository.save(admin);
+
             LocalDateTime at = publishedAt;
             for (int i = 0; i < amount; ++i) {
                 User user = nextUser();
