@@ -1,5 +1,6 @@
 package org.vtsukur.spring.rest.market.infrastructure;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -14,14 +15,12 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
+    @Autowired
+    private CustomUserDetailsService customUserDetailsService;
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-                .withUser("ipavlenko").password("secret").roles("USER")
-                .and()
-                .withUser("vtsukur").password("secret").roles("USER")
-                .and()
-                .withUser("hontareva").password("moi-baksi").roles("USER", "ADMIN");
+        auth.userDetailsService(customUserDetailsService);
     }
 
     @Override
