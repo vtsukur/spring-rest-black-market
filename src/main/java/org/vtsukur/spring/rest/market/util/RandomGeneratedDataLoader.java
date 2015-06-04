@@ -7,6 +7,7 @@ import org.vtsukur.spring.rest.market.domain.core.ad.AdRepository;
 import org.vtsukur.spring.rest.market.domain.core.ad.Location;
 import org.vtsukur.spring.rest.market.domain.core.user.User;
 import org.vtsukur.spring.rest.market.domain.core.user.UserRepository;
+import org.vtsukur.spring.rest.market.infrastructure.SecurityUtils;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -64,17 +65,20 @@ public class RandomGeneratedDataLoader {
     public void load() {
         int amount = 100;
         LocalDateTime now = LocalDateTime.now();
-        LocalDateTime publishedAt = now.minusMinutes(PUBLISHING_TIME_MAX_DIFF * amount);
+        final LocalDateTime publishedAt = now.minusMinutes(PUBLISHING_TIME_MAX_DIFF * amount);
 
-        for (int i = 0; i < amount; ++i) {
-            User user = nextUser();
-            userRepository.save(user);
+        SecurityUtils.run("system", "system", new String[] { "ROLE_ADMIN" }, () -> {
+            LocalDateTime at = publishedAt;
+            for (int i = 0; i < amount; ++i) {
+                User user = nextUser();
+                userRepository.save(user);
 
-            Ad ad = nextAd(user, publishedAt);
-            adRepository.save(ad);
+                Ad ad = nextAd(user, at);
+                adRepository.save(ad);
 
-            publishedAt = ad.getPublishedAt();
-        }
+                at = ad.getPublishedAt();
+            }
+        });
     }
 
     private static User nextUser() {
