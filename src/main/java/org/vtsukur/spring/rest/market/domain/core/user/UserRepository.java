@@ -12,19 +12,19 @@ public interface UserRepository extends CrudRepository<User, Long> {
     @RestResource(exported = false)
     User findByPhoneNumber(String phoneNumber);
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @RestResource(exported = false)
     @Override
     <S extends User> S save(S entity);
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @RestResource(exported = false)
     @Override
     <S extends User> Iterable<S> save(Iterable<S> entities);
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @RestResource(exported = false)
     @Override
     User findOne(Long aLong);
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @RestResource(exported = false)
     @Override
     boolean exists(Long aLong);
 
@@ -36,23 +36,23 @@ public interface UserRepository extends CrudRepository<User, Long> {
     @Override
     Iterable<User> findAll(Iterable<Long> longs);
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @RestResource(exported = false)
     @Override
     long count();
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @RestResource(exported = false)
     @Override
     void delete(Long aLong);
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @RestResource(exported = false)
     @Override
     void delete(User entity);
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @RestResource(exported = false)
     @Override
     void delete(Iterable<? extends User> entities);
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @RestResource(exported = false)
     @Override
     void deleteAll();
 
