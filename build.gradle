@@ -21,6 +21,11 @@ apply plugin: "java"
 apply plugin: "spring-boot"
 apply plugin: "io.spring.dependency-management"
 
+copy {
+  from "etc/hack/java"
+  into "src/main/java"
+}
+
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
