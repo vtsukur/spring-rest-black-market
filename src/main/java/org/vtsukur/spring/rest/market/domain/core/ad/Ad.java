@@ -40,23 +40,9 @@ public class Ad extends BaseEntity {
 
     public enum Currency {
 
-        USD {
+        USD,
 
-            public BigDecimal avgStatsRate(Type type) {
-                return BigDecimal.valueOf(type == Type.BUY ? 21.81 : 22);
-            }
-
-        },
-
-        EUR {
-
-            public BigDecimal avgStatsRate(Type type) {
-                return BigDecimal.valueOf(type == Type.BUY ? 24.24 : 24.44);
-            }
-
-        };
-
-        public abstract BigDecimal avgStatsRate(Type type);
+        EUR
 
     }
 
