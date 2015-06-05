@@ -94,7 +94,7 @@ public class RandomGeneratedDataLoader {
         ad.setType(Ad.Type.BUY);
         ad.setAmount(BigInteger.valueOf(100000000));
         ad.setCurrency(Ad.Currency.USD);
-        ad.setRate(Ad.Currency.USD.avgStatsRate(ad.getType()));
+        ad.setRate(nextRate(ad.getCurrency(), ad.getType()));
         ad.setUser(admin);
         ad.setStatus(Ad.Status.PUBLISHED);
         ad.setPublishedAt(publishedAt);
@@ -112,7 +112,7 @@ public class RandomGeneratedDataLoader {
         ad.setType(Ad.Type.BUY);
         ad.setAmount(BigInteger.valueOf(4000));
         ad.setCurrency(Ad.Currency.USD);
-        ad.setRate(Ad.Currency.USD.avgStatsRate(ad.getType()));
+        ad.setRate(nextRate(ad.getCurrency(), ad.getType()));
         ad.setUser(user);
         ad.setStatus(Ad.Status.PUBLISHED);
         ad.setPublishedAt(publishedAt);
@@ -168,7 +168,14 @@ public class RandomGeneratedDataLoader {
     }
 
     private static BigDecimal nextRate(Ad.Currency currency, Ad.Type type) {
-        return currency.avgStatsRate(type);
+        return avgRate(currency, type);
+    }
+
+    private static BigDecimal avgRate(Ad.Currency currency, Ad.Type type) {
+        return (currency == Ad.Currency.USD ?
+                BigDecimal.valueOf(type == Ad.Type.BUY ? 21.81 : 22) :
+                BigDecimal.valueOf(type == Ad.Type.BUY ? 24.24 : 24.44)
+        );
     }
 
     private static String nextDistrict() {
