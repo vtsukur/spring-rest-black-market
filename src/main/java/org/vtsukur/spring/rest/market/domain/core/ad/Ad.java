@@ -24,29 +24,6 @@ public class Ad extends BaseEntity {
     @Column(nullable = false)
     private Type type;
 
-    @Column(nullable = false)
-    private BigInteger amount;
-
-    @Column(nullable = false)
-    private Currency currency;
-
-    @Column(nullable = false)
-    private BigDecimal rate;
-
-    @ManyToOne
-    @JoinColumn(nullable = false)
-    private User user;
-
-    private Location location;
-
-    private String comment;
-
-    @Column(nullable = false)
-    private Status status = Status.NEW;
-
-    @Convert(converter = LocalDateTimeConverter.class)
-    private LocalDateTime publishedAt;
-
     public enum Type {
 
         BUY,
@@ -54,6 +31,12 @@ public class Ad extends BaseEntity {
         SELL
 
     }
+
+    @Column(nullable = false)
+    private BigInteger amount;
+
+    @Column(nullable = false)
+    private Currency currency;
 
     public enum Currency {
 
@@ -76,6 +59,23 @@ public class Ad extends BaseEntity {
         public abstract BigDecimal avgStatsRate(Type type);
 
     }
+
+    @Column(nullable = false)
+    private BigDecimal rate;
+
+    @ManyToOne
+    @JoinColumn(nullable = false)
+    private User user;
+
+    private Location location;
+
+    private String comment;
+
+    @Convert(converter = LocalDateTimeConverter.class)
+    private LocalDateTime publishedAt;
+
+    @Column(nullable = false)
+    private Status status = Status.NEW;
 
     public enum Status {
 
