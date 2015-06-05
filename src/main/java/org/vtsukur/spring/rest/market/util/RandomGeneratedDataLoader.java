@@ -63,6 +63,8 @@ public class RandomGeneratedDataLoader {
     @Autowired
     private AdRepository adRepository;
 
+    private boolean stableUsersOnly;
+
     public void load() {
         int amount = 100;
         LocalDateTime now = LocalDateTime.now();
@@ -72,15 +74,17 @@ public class RandomGeneratedDataLoader {
             setupAdmin(publishedAt.minusMinutes(10));
             setupStableUser(publishedAt);
 
-            LocalDateTime at = publishedAt;
-            for (int i = 0; i < amount; ++i) {
-                User user = nextUser();
-                userRepository.save(user);
+            if (!stableUsersOnly) {
+                LocalDateTime at = publishedAt;
+                for (int i = 0; i < amount; ++i) {
+                    User user = nextUser();
+                    userRepository.save(user);
 
-                Ad ad = nextAd(user, at);
-                adRepository.save(ad);
+                    Ad ad = nextAd(user, at);
+                    adRepository.save(ad);
 
-                at = ad.getPublishedAt();
+                    at = ad.getPublishedAt();
+                }
             }
         });
     }
@@ -90,17 +94,19 @@ public class RandomGeneratedDataLoader {
         admin.setPhoneNumber(Admin.HONTAREVA);
         userRepository.save(admin);
 
-        Ad ad = new Ad();
-        ad.setType(Ad.Type.BUY);
-        ad.setAmount(BigInteger.valueOf(100000000));
-        ad.setCurrency(Ad.Currency.USD);
-        ad.setRate(nextRate(ad.getCurrency(), ad.getType()));
-        ad.setUser(admin);
-        ad.setStatus(Ad.Status.PUBLISHED);
-        ad.setPublishedAt(publishedAt);
-        ad.setLocation(new Location("Киев", "Печерск"));
-        ad.setComment("играем по крупному");
-        adRepository.save(ad);
+        if (!stableUsersOnly) {
+            Ad ad = new Ad();
+            ad.setType(Ad.Type.BUY);
+            ad.setAmount(BigInteger.valueOf(100000000));
+            ad.setCurrency(Ad.Currency.USD);
+            ad.setRate(nextRate(ad.getCurrency(), ad.getType()));
+            ad.setUser(admin);
+            ad.setStatus(Ad.Status.PUBLISHED);
+            ad.setPublishedAt(publishedAt);
+            ad.setLocation(new Location("Киев", "Печерск"));
+            ad.setComment("играем по крупному");
+            adRepository.save(ad);
+        }
     }
 
     private void setupStableUser(LocalDateTime publishedAt) {
@@ -108,17 +114,19 @@ public class RandomGeneratedDataLoader {
         user.setPhoneNumber("0681854104");
         userRepository.save(user);
 
-        Ad ad = new Ad();
-        ad.setType(Ad.Type.BUY);
-        ad.setAmount(BigInteger.valueOf(4000));
-        ad.setCurrency(Ad.Currency.USD);
-        ad.setRate(nextRate(ad.getCurrency(), ad.getType()));
-        ad.setUser(user);
-        ad.setStatus(Ad.Status.PUBLISHED);
-        ad.setPublishedAt(publishedAt);
-        ad.setLocation(new Location("Киев", "Соломенка"));
-        ad.setComment("нужна валюта срочно, зарплата \"горит\", могу подъехать!");
-        adRepository.save(ad);
+        if (!stableUsersOnly) {
+            Ad ad = new Ad();
+            ad.setType(Ad.Type.BUY);
+            ad.setAmount(BigInteger.valueOf(4000));
+            ad.setCurrency(Ad.Currency.USD);
+            ad.setRate(nextRate(ad.getCurrency(), ad.getType()));
+            ad.setUser(user);
+            ad.setStatus(Ad.Status.PUBLISHED);
+            ad.setPublishedAt(publishedAt);
+            ad.setLocation(new Location("Киев", "Соломенка"));
+            ad.setComment("нужна валюта срочно, зарплата \"горит\", могу подъехать!");
+            adRepository.save(ad);
+        }
     }
 
     private static User nextUser() {
@@ -196,6 +204,11 @@ public class RandomGeneratedDataLoader {
 
     private static int nextInt(int bound) {
         return new Random().nextInt(bound);
+    }
+
+    public RandomGeneratedDataLoader stableUsersOnly(boolean stableUsersOnly) {
+        this.stableUsersOnly = stableUsersOnly;
+        return this;
     }
 
 }
