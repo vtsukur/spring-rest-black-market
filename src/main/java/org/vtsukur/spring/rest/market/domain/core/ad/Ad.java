@@ -22,6 +22,7 @@ import java.time.LocalDateTime;
 public class Ad extends BaseEntity {
 
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private Type type;
 
     public enum Type {
@@ -36,6 +37,7 @@ public class Ad extends BaseEntity {
     private BigInteger amount;
 
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private Currency currency;
 
     public enum Currency {
@@ -61,6 +63,7 @@ public class Ad extends BaseEntity {
     private LocalDateTime publishedAt;
 
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private Status status = Status.NEW;
 
     public enum Status {
