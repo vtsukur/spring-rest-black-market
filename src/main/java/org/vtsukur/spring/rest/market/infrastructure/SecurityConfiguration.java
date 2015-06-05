@@ -29,10 +29,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.httpBasic().and()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/api/ads/**").hasRole("USER")
-                .antMatchers(HttpMethod.PUT, "/api/ads/**").hasRole("USER")
-                .antMatchers(HttpMethod.PATCH, "/api/ads/**").hasRole("USER")
-                .antMatchers(HttpMethod.DELETE, "/api/ads/**").hasRole("USER")
+                .antMatchers(HttpMethod.POST, "/ads/**").hasRole("USER")
+                .antMatchers(HttpMethod.PUT, "/ads/**").hasRole("USER")
+                .antMatchers(HttpMethod.PATCH, "/ads/**").hasRole("USER")
+                .antMatchers(HttpMethod.DELETE, "/ads/**").hasRole("USER")
                 .and()
                 .csrf().disable();
     }
