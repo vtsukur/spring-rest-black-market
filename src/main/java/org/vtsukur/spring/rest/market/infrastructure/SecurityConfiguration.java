@@ -29,6 +29,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.httpBasic().and()
                 .authorizeRequests()
+                .antMatchers(HttpMethod.GET, "/ui/admin.html").hasRole("USER")
                 .antMatchers(HttpMethod.POST, "/ads/**").hasRole("USER")
                 .antMatchers(HttpMethod.PUT, "/ads/**").hasRole("USER")
                 .antMatchers(HttpMethod.PATCH, "/ads/**").hasRole("USER")
