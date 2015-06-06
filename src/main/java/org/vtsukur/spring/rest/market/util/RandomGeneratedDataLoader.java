@@ -1,12 +1,11 @@
 package org.vtsukur.spring.rest.market.util;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Component;
 import org.vtsukur.spring.rest.market.domain.core.ad.Ad;
-import org.vtsukur.spring.rest.market.domain.core.ad.AdRepository;
 import org.vtsukur.spring.rest.market.domain.core.ad.Location;
 import org.vtsukur.spring.rest.market.domain.core.user.User;
-import org.vtsukur.spring.rest.market.domain.core.user.UserRepository;
 import org.vtsukur.spring.rest.market.infrastructure.Admin;
 import org.vtsukur.spring.rest.market.infrastructure.SecurityUtils;
 
@@ -58,10 +57,10 @@ public class RandomGeneratedDataLoader {
     public static final int PUBLISHING_TIME_MAX_DIFF = 4;
 
     @Autowired
-    private UserRepository userRepository;
+    private CrudRepository<User, Long> userRepository;
 
     @Autowired
-    private AdRepository adRepository;
+    private CrudRepository<Ad, Long> adRepository;
 
     private boolean stableUsersOnly;
 
