@@ -43,7 +43,7 @@ var adView = Backbone.View.extend({
 });
 
 var AdsModel = Backbone.RelationalHalResource.extend({
-    url: '/api/ads'
+    url: '/ads'
 });
 
 var ads = new AdsModel();
