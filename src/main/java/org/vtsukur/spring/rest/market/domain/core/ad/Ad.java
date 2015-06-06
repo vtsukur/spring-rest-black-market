@@ -22,13 +22,31 @@ import java.time.LocalDateTime;
 public class Ad extends BaseEntity {
 
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private Type type;
+
+    public enum Type {
+
+        BUY,
+
+        SELL
+
+    }
 
     @Column(nullable = false)
     private BigInteger amount;
 
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private Currency currency;
+
+    public enum Currency {
+
+        USD,
+
+        EUR
+
+    }
 
     @Column(nullable = false)
     private BigDecimal rate;
@@ -41,41 +59,12 @@ public class Ad extends BaseEntity {
 
     private String comment;
 
-    @Column(nullable = false)
-    private Status status = Status.NEW;
-
     @Convert(converter = LocalDateTimeConverter.class)
     private LocalDateTime publishedAt;
 
-    public enum Type {
-
-        BUY,
-
-        SELL
-
-    }
-
-    public enum Currency {
-
-        USD {
-
-            public BigDecimal avgStatsRate(Type type) {
-                return BigDecimal.valueOf(type == Type.BUY ? 21.81 : 22);
-            }
-
-        },
-
-        EUR {
-
-            public BigDecimal avgStatsRate(Type type) {
-                return BigDecimal.valueOf(type == Type.BUY ? 24.24 : 24.44);
-            }
-
-        };
-
-        public abstract BigDecimal avgStatsRate(Type type);
-
-    }
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Status status = Status.NEW;
 
     public enum Status {
 
@@ -93,8 +82,7 @@ public class Ad extends BaseEntity {
             publishedAt = LocalDateTime.now();
         }
         else {
-            throw new InvalidAdStateTransitionException(
-                    "Ad is already published");
+            throw new InvalidAdStateTransitionException("Ad is already published");
         }
     }
 

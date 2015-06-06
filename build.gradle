@@ -12,10 +12,19 @@ buildscript {
   }
 }
 
+ext {
+  springSecurityVersion = "4.0.1.RELEASE"
+}
+
 apply plugin: "idea"
 apply plugin: "java"
 apply plugin: "spring-boot"
 apply plugin: "io.spring.dependency-management"
+
+copy {
+  from "etc/hack/java"
+  into "src/main/java"
+}
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -25,9 +34,8 @@ repositories {
 }
 
 dependencies {
-  // For domain modeling and Spring Data JPA.
+  // For domain modeling + Spring Data JPA.
   compile("org.springframework.boot:spring-boot-starter-data-jpa")
-  compile("org.springframework.boot:spring-boot-starter-security")
   compile("org.hsqldb:hsqldb")
   compile("org.projectlombok:lombok:1.16.4")
   compile("com.fasterxml.jackson.core:jackson-annotations")
@@ -38,6 +46,12 @@ dependencies {
   // Spring Data REST.
   compile("org.springframework.boot:spring-boot-starter-data-rest")
   compile("org.springframework.data:spring-data-rest-webmvc:2.3.0.RELEASE")
+
+  // Spring Security.
+  compile("org.springframework.boot:spring-boot-starter-security")
+  compile("org.springframework.security:spring-security-data:$springSecurityVersion")
+  compile("org.springframework.security:spring-security-web:$springSecurityVersion")
+  compile("org.springframework.security:spring-security-config:$springSecurityVersion")
 
   // Initial test dependencies.
   testCompile("org.springframework.boot:spring-boot-starter-test")
