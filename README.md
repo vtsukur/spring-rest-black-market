@@ -43,3 +43,7 @@ and running it as *Application* or *Spring Boot*.
 All static content put under `src/main/resources/static` will be exposed automatically
 (like any other application based on Spring Boot).
 To hot deploy static sources just trigger compilation in the IDE and refresh the page in the browser.
+To get all client side dependencies just run [npm](https://www.npmjs.com)
+
+    npm install
+
