@@ -47,12 +47,6 @@ dependencies {
   compile("org.springframework.boot:spring-boot-starter-data-rest")
   compile("org.springframework.data:spring-data-rest-webmvc:2.3.0.RELEASE")
 
-  // Spring Security.
-  compile("org.springframework.boot:spring-boot-starter-security")
-  compile("org.springframework.security:spring-security-data:$springSecurityVersion")
-  compile("org.springframework.security:spring-security-web:$springSecurityVersion")
-  compile("org.springframework.security:spring-security-config:$springSecurityVersion")
-
   // Initial test dependencies.
   testCompile("org.springframework.boot:spring-boot-starter-test")
   testCompile("junit:junit:4.12")

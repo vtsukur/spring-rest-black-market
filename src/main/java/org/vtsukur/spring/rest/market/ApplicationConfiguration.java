@@ -15,7 +15,7 @@ public class ApplicationConfiguration {
 
     @Bean
     CommandLineRunner commandLineRunner(RandomGeneratedDataLoader dataLoader) {
-        return (o) -> dataLoader.stableUsersOnly(false).load();
+        return (o) -> dataLoader.stableUsersOnly(true).load();
     }
 
     @Bean
