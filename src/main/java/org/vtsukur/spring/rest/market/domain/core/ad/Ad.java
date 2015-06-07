@@ -78,8 +78,8 @@ public class Ad extends BaseEntity {
 
     public void publish() {
         if (status == Status.NEW) {
-            status = Status.PUBLISHED;
             publishedAt = LocalDateTime.now();
+            status = Status.PUBLISHED;
         }
         else {
             throw new InvalidAdStateTransitionException("Ad is already published");
