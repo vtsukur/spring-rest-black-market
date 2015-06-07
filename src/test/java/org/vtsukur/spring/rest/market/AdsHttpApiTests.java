@@ -72,8 +72,8 @@ public class AdsHttpApiTests {
         ad.setAmount(BigInteger.valueOf(3000));
         ad.setCurrency(Ad.Currency.USD);
         ad.setRate(BigDecimal.valueOf(21.5));
-        ad.setLocation(new Location("Киев", "Шевченковский"));
-        ad.setComment("можно частями");
+        ad.setLocation(new Location("Kyiv", "Obolon"));
+        ad.setComment("partial deal is OK");
         ad.setUser(referenceUser);
 
         String content = saveRequestJsonString(ad);
@@ -85,7 +85,13 @@ public class AdsHttpApiTests {
         final Ad createdBooking = adRepository.findAll(new Sort(Sort.Direction.DESC, "id")).iterator().next();
         resultActions.andExpect(status().isCreated())
                 .andExpect(header().string(HttpHeaders.LOCATION, "http://localhost:8080/ads/" + createdBooking.getId()))
-                .andExpect(jsonPath("$.type", is(ad.getType().name())));
+                .andExpect(jsonPath("$.type", is(ad.getType().name())))
+                .andExpect(jsonPath("$.amount", is(ad.getAmount().intValue())))
+                .andExpect(jsonPath("$.currency", is(ad.getCurrency().name())))
+                .andExpect(jsonPath("$.rate", is(ad.getRate().doubleValue())))
+                .andExpect(jsonPath("$.location.city", is(ad.getLocation().getCity())))
+                .andExpect(jsonPath("$.location.area", is(ad.getLocation().getArea())))
+                .andExpect(jsonPath("$.comment", is(ad.getComment())));
     }
 
     private static String saveRequestJsonString(Ad ad) {
