@@ -40,6 +40,7 @@ targetCompatibility = 1.8
 
 repositories {
   mavenCentral()
+  maven { url 'https://repo.spring.io/snapshot' }
 }
 
 dependencies {
@@ -66,6 +67,7 @@ dependencies {
   testCompile("org.springframework.boot:spring-boot-starter-test")
   testCompile("junit:junit:4.12")
   testCompile("com.jayway.jsonpath:json-path:2.0.0")
+  testCompile("org.springframework.restdocs:spring-restdocs:0.1.0.BUILD-SNAPSHOT")
 }
 
 test {
