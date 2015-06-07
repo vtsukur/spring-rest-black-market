@@ -1,3 +1,9 @@
+traverson.registerMediaType(TraversonJsonHalAdapter.mediaType,
+    TraversonJsonHalAdapter);
+
+var rootUri = '/';
+var api = traverson.from(rootUri);
+
 var View = Backbone.View.extend({
     el: $(".container"),
     initialize: function () {
@@ -42,10 +48,19 @@ var adView = Backbone.View.extend({
     }
 });
 
-var AdsModel = Backbone.RelationalHalResource.extend({
-    url: '/ads'
-});
+var AdsModel = Backbone.RelationalHalResource.extend({});
 
 var ads = new AdsModel();
+
+api.jsonHal()
+    .follow('ads')
+    .getUri(function(err, uri) {
+        if (err) {
+            console.log(err);
+            return;
+        }
+        ads.url = uri;
+        ads.fetch();
+    });
+
 var view = new View({ model: ads }).render();
-ads.fetch();
