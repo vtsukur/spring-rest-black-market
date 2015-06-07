@@ -1,0 +1,24 @@
+{
+  "name": "spring-rest-black-market",
+  "homepage": "https://github.com/vtsukur/spring-rest-black-market",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.4",
+    "bootstrap": "~3.3.4",
+    "uri-templates": "~0.1.5",
+    "underscore": "~1.8.3",
+    "backbone": "~1.2.1",
+    "backbone-relational-hal": "~0.1.3",
+    "moment": "~2.10.3",
+    "uri.js": "~1.15.1",
+    "traverson-hal": "~2.0.0",
+    "traverson": "~2.0.1"
+  }
+}

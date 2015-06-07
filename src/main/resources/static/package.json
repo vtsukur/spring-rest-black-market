@@ -1,0 +1,16 @@
+{
+  "name": "spring-rest-black-market",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "scripts": {
+    "postinstall" : "node_modules/.bin/bower install"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "bower": "*"
+  }
+}
