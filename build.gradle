@@ -76,6 +76,9 @@ asciidoctor {
   attributes 'generated': generatedDocumentation
   inputs.dir generatedDocumentation
   dependsOn test
+  onlyIf {
+    project.hasProperty("genDoc")
+  }
 }
 
 task wrapper(type: Wrapper) {
