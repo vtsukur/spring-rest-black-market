@@ -1,7 +1,14 @@
 package org.vtsukur.spring.rest.market.util;
 
+import com.fasterxml.jackson.databind.Module;
+import com.fasterxml.jackson.datatype.jsr310.JSR310Module;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
+import org.springframework.data.rest.webmvc.config.RepositoryRestMvcConfiguration;
 import org.springframework.stereotype.Component;
 import org.vtsukur.spring.rest.market.domain.core.ad.Ad;
 import org.vtsukur.spring.rest.market.domain.core.user.User;
@@ -17,7 +24,7 @@ import java.util.Random;
  * @author volodymyr.tsukur
  */
 @Component
-public class RandomDataLoader {
+public class ApplicationConfiguration {
 
     private static final Integer[] MOBILE_OPERATOR_CODES = new Integer[] {
             39,
@@ -204,9 +211,29 @@ public class RandomDataLoader {
         return new Random().nextInt(bound);
     }
 
-    public RandomDataLoader minimalSet(boolean stableUsersOnly) {
+    public ApplicationConfiguration minimalSet(boolean stableUsersOnly) {
         this.stableUsersOnly = stableUsersOnly;
         return this;
+    }
+
+    @Bean
+    CommandLineRunner commandLineRunner(ApplicationConfiguration dataLoader) {
+        return (o) -> dataLoader.minimalSet(false).load();
+    }
+
+    @Bean
+    public Module newJSR310Module() {
+        return new JSR310Module();
+    }
+
+    @Configuration
+    public static class CustomRepositoryRestMvcConfiguration extends RepositoryRestMvcConfiguration {
+
+        @Override
+        protected void configureRepositoryRestConfiguration(RepositoryRestConfiguration config) {
+            config.exposeIdsFor(Ad.class);
+        }
+
     }
 
 }
