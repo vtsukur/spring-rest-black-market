@@ -204,7 +204,7 @@ public class RandomGeneratedDataLoader {
         return new Random().nextInt(bound);
     }
 
-    public RandomGeneratedDataLoader stableUsersOnly(boolean stableUsersOnly) {
+    public RandomGeneratedDataLoader minimalSet(boolean stableUsersOnly) {
         this.stableUsersOnly = stableUsersOnly;
         return this;
     }
