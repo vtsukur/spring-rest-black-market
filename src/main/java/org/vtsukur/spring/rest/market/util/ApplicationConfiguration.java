@@ -12,7 +12,6 @@ import org.springframework.data.rest.webmvc.config.RepositoryRestMvcConfiguratio
 import org.springframework.stereotype.Component;
 import org.vtsukur.spring.rest.market.domain.core.ad.Ad;
 import org.vtsukur.spring.rest.market.domain.core.user.User;
-import org.vtsukur.spring.rest.market.infrastructure.Admin;
 import org.vtsukur.spring.rest.market.infrastructure.SecurityUtils;
 
 import java.math.BigDecimal;
@@ -96,7 +95,7 @@ public class ApplicationConfiguration {
 
     private void setupAdmin(LocalDateTime publishedAt) {
         User admin = new User();
-        admin.setPhoneNumber(Admin.HONTAREVA);
+        admin.setPhoneNumber("hontareva");
         userRepository.save(admin);
 
         if (!stableUsersOnly) {

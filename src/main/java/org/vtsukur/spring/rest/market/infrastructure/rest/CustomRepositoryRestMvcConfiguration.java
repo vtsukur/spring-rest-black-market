@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
 import org.springframework.data.rest.webmvc.config.RepositoryRestMvcConfiguration;
 import org.vtsukur.spring.rest.market.domain.core.ad.Ad;
+import org.vtsukur.spring.rest.market.domain.core.user.User;
 
 /**
  * @author volodymyr.tsukur
@@ -13,7 +14,7 @@ public class CustomRepositoryRestMvcConfiguration extends RepositoryRestMvcConfi
 
     @Override
     protected void configureRepositoryRestConfiguration(RepositoryRestConfiguration config) {
-        config.exposeIdsFor(Ad.class);
+        config.exposeIdsFor(Ad.class, User.class);
     }
 
 }
