@@ -2,10 +2,47 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title></title>
+    <title>Черная админка</title>
+    <link rel="stylesheet" href="../js/libs/bootstrap/dist/css/bootstrap.min.css">
 </head>
 <body>
-
+<script type="text/template" id="ad-template">
+    <td><%= amount %></td>
+    <td><%= currency %></td>
+    <td><%= phoneNumber %></td>
+    <td><%= rate %></td>
+    <td><%= type %></td>
+    <td><%= location.city %></td>
+    <td><%= location.area %></td>
+    <td><%= moment(publishedAt).format("MMM DD hh:mm:ss") %></td>
+    <td><%= comment %></td>
+</script>
+<div class="container">
+    <h1>Черный рынок валюты</h1>
+    <a href="index.html">На главную</a>
+    <div id="page-links" class="text-center">
+        <a class="btn" id="prev">Предыдущая</a>
+        <a class="btn" id="next">Следующая</a>
+    </div>
+    <table class="table table-bordered table-striped" id="ads-list">
+        <thead>
+        <tr>
+            <th>Колличество</th>
+            <th>Валюта</th>
+            <th>Номер телефона</th>
+            <th>Курс</th>
+            <th>Тип</th>
+            <th>Город</th>
+            <th>Район</th>
+            <th>Опубликовано</th>
+            <th>Комментарий</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+    <div id="form" class ="form-horizontal"></div>
+</div>
 <script src="../js/libs/jquery/dist/jquery.min.js" type="text/javascript"></script>
 <script src="../js/libs/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
 <script src="../js/libs/uri-templates/uri-templates.min.js" type="text/javascript"></script>
@@ -13,6 +50,8 @@
 <script src="../js/libs/backbone/backbone-min.js" type="text/javascript"></script>
 <script src="../js/libs/backbone-relational/backbone-relational.js" type="text/javascript"></script>
 <script src="../js/libs/backbone-relational-hal/backbone-relational-hal.js" type="text/javascript"></script>
+<script src="../js/libs/backform/src/backform.js" type="text/javascript"></script>
+
 <script src="../js/libs/traverson/browser/dist/traverson.min.js"></script>
 <script src="../js/libs/traverson-hal/browser/dist/traverson-hal.js"></script>
 <script src="../js/libs/moment/moment.js" type="text/javascript"></script>
