@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Component;
 import org.vtsukur.spring.rest.market.domain.core.ad.Ad;
-import org.vtsukur.spring.rest.market.domain.core.ad.Location;
 import org.vtsukur.spring.rest.market.domain.core.user.User;
 import org.vtsukur.spring.rest.market.infrastructure.Admin;
 import org.vtsukur.spring.rest.market.infrastructure.SecurityUtils;
@@ -102,7 +101,7 @@ public class RandomGeneratedDataLoader {
             ad.setUser(admin);
             ad.setStatus(Ad.Status.PUBLISHED);
             ad.setPublishedAt(publishedAt);
-            ad.setLocation(new Location("Киев", "Печерск"));
+            ad.setLocation(new Ad.Location("Киев", "Печерск"));
             ad.setComment("играем по крупному");
             adRepository.save(ad);
         }
@@ -122,7 +121,7 @@ public class RandomGeneratedDataLoader {
             ad.setUser(user);
             ad.setStatus(Ad.Status.PUBLISHED);
             ad.setPublishedAt(publishedAt);
-            ad.setLocation(new Location("Киев", "Соломенка"));
+            ad.setLocation(new Ad.Location("Киев", "Соломенка"));
             ad.setComment("нужна валюта срочно, зарплата \"горит\", могу подъехать!");
             adRepository.save(ad);
         }
@@ -146,7 +145,7 @@ public class RandomGeneratedDataLoader {
         ad.setRate(nextRate(currency, type));
         ad.setUser(user);
 
-        ad.setLocation(new Location("Киев", nextDistrict()));
+        ad.setLocation(new Ad.Location("Киев", nextDistrict()));
         ad.setComment(nextComments());
         ad.setStatus(Ad.Status.PUBLISHED);
         ad.setPublishedAt(nextPublishingTime(publishedAt));

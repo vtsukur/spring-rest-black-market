@@ -24,7 +24,7 @@ public interface AdExcerpt {
     @Value("#{target.user.phoneNumber}")
     String getPhoneNumber();
 
-    Location getLocation();
+    Ad.Location getLocation();
 
     String getComment();
 
