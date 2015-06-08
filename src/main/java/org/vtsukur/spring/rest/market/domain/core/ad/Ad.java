@@ -1,11 +1,8 @@
 package org.vtsukur.spring.rest.market.domain.core.ad;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-import org.vtsukur.spring.rest.market.domain.core.BaseEntity;
+import lombok.Data;
+import org.springframework.hateoas.Identifiable;
 import org.vtsukur.spring.rest.market.domain.core.user.User;
-import org.vtsukur.spring.rest.market.infrastructure.LocalDateTimeConverter;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -16,10 +13,12 @@ import java.time.LocalDateTime;
  * @author volodymyr.tsukur
  */
 @Entity
-@Getter
-@Setter
-@ToString(callSuper = true)
-public class Ad extends BaseEntity {
+@Data
+public class Ad implements Identifiable<Long> {
+
+    @Id
+    @GeneratedValue
+    private Long id;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
@@ -59,7 +58,7 @@ public class Ad extends BaseEntity {
 
     private String comment;
 
-    @Convert(converter = LocalDateTimeConverter.class)
+    @Lob
     private LocalDateTime publishedAt;
 
     @Column(nullable = false)
