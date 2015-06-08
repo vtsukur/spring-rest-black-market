@@ -19,7 +19,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 import org.vtsukur.spring.rest.market.domain.core.ad.Ad;
 import org.vtsukur.spring.rest.market.domain.core.ad.AdRepository;
-import org.vtsukur.spring.rest.market.domain.core.ad.Location;
 import org.vtsukur.spring.rest.market.domain.core.user.User;
 import org.vtsukur.spring.rest.market.domain.core.user.UserRepository;
 import org.vtsukur.spring.rest.market.infrastructure.Admin;
@@ -72,7 +71,7 @@ public class AdsHttpApiTests {
         ad.setAmount(BigInteger.valueOf(3000));
         ad.setCurrency(Ad.Currency.USD);
         ad.setRate(BigDecimal.valueOf(21.5));
-        ad.setLocation(new Location("Kyiv", "Obolon"));
+        ad.setLocation(new Ad.Location("Kyiv", "Obolon"));
         ad.setComment("partial deal is OK");
         ad.setUser(referenceUser);
 

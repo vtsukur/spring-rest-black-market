@@ -1,6 +1,6 @@
 package org.vtsukur.spring.rest.market.domain.core.ad;
 
-import lombok.Data;
+import lombok.*;
 import org.springframework.hateoas.Identifiable;
 import org.vtsukur.spring.rest.market.domain.core.user.User;
 
@@ -55,6 +55,20 @@ public class Ad implements Identifiable<Long> {
     private User user;
 
     private Location location;
+
+    @Embeddable
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class Location {
+
+        @Column(nullable = false)
+        private String city;
+
+        private String area;
+
+    }
 
     private String comment;
 
