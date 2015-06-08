@@ -19,6 +19,7 @@
     "moment": "~2.10.3",
     "uri.js": "~1.15.1",
     "traverson-hal": "~2.0.0",
-    "traverson": "~2.0.1"
+    "traverson": "~2.0.1",
+    "backform": "~0.2.0"
   }
 }
