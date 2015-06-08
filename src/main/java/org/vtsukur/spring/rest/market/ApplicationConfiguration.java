@@ -5,7 +5,7 @@ import com.fasterxml.jackson.datatype.jsr310.JSR310Module;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.vtsukur.spring.rest.market.util.RandomGeneratedDataLoader;
+import org.vtsukur.spring.rest.market.util.RandomDataLoader;
 
 /**
  * @author volodymyr.tsukur
@@ -14,7 +14,7 @@ import org.vtsukur.spring.rest.market.util.RandomGeneratedDataLoader;
 public class ApplicationConfiguration {
 
     @Bean
-    CommandLineRunner commandLineRunner(RandomGeneratedDataLoader dataLoader) {
+    CommandLineRunner commandLineRunner(RandomDataLoader dataLoader) {
         return (o) -> dataLoader.minimalSet(false).load();
     }
 

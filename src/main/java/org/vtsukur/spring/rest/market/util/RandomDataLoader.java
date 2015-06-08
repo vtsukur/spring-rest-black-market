@@ -17,7 +17,7 @@ import java.util.Random;
  * @author volodymyr.tsukur
  */
 @Component
-public class RandomGeneratedDataLoader {
+public class RandomDataLoader {
 
     private static final Integer[] MOBILE_OPERATOR_CODES = new Integer[] {
             39,
@@ -204,7 +204,7 @@ public class RandomGeneratedDataLoader {
         return new Random().nextInt(bound);
     }
 
-    public RandomGeneratedDataLoader minimalSet(boolean stableUsersOnly) {
+    public RandomDataLoader minimalSet(boolean stableUsersOnly) {
         this.stableUsersOnly = stableUsersOnly;
         return this;
     }
