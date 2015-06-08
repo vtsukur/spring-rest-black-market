@@ -1,5 +1,6 @@
 package org.vtsukur.spring.rest.market.domain.core.user;
 
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.rest.core.annotation.RestResource;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -11,6 +12,10 @@ public interface UserRepository extends CrudRepository<User, Long> {
 
     @RestResource(exported = false)
     User findByPhoneNumber(String phoneNumber);
+
+    @RestResource(rel = "current-user", path = "current-user")
+    @Query("select user from User user where user.phoneNumber = ?#{ principal?.username }")
+    User findMyself();
 
     @RestResource(exported = false)
     @Override
