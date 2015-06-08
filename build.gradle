@@ -48,9 +48,6 @@ dependencies {
   compile("org.springframework.boot:spring-boot-starter-data-jpa")
   compile("org.hsqldb:hsqldb")
   compile("org.projectlombok:lombok:1.16.4")
-  compile("com.fasterxml.jackson.core:jackson-annotations")
-  compile("com.fasterxml.jackson.core:jackson-core")
-  compile("com.fasterxml.jackson.core:jackson-databind")
   compile("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
 
   // Spring Data REST.
