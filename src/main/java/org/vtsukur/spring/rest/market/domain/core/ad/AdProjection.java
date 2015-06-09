@@ -10,8 +10,8 @@ import java.time.LocalDateTime;
 /**
  * @author volodymyr.tsukur
  */
-@Projection(name = "default", types = Ad.class)
-public interface AdExcerpt {
+@Projection(name = "custom", types = Ad.class)
+public interface AdProjection {
 
     Ad.Type getType();
 
