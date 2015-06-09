@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.vtsukur.spring.rest.market.domain.core.user.User;
 import org.vtsukur.spring.rest.market.domain.core.user.UserRepository;
 
 import java.util.Arrays;
@@ -24,10 +25,10 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return new CustomUserDetails(userRepository.findByPhoneNumber(username).getPhoneNumber());
+        return new CustomUserDetails(userRepository.findByPhoneNumber(username));
     }
 
-    private static class CustomUserDetails implements UserDetails {
+    public static class CustomUserDetails implements UserDetails {
 
         private final SimpleGrantedAuthority USER_ROLE = new SimpleGrantedAuthority("ROLE_USER");
 
@@ -39,13 +40,20 @@ public class CustomUserDetailsService implements UserDetailsService {
         private final Collection<? extends GrantedAuthority> ROLES_USER_AND_ADMIN =
                 Arrays.asList(USER_ROLE, USER_ADMIN);
 
+        private final Long id;
+
         private final String username;
 
         private final Collection<? extends GrantedAuthority> roles;
 
-        public CustomUserDetails(String username) {
-            this.username = username;
+        public CustomUserDetails(final User user) {
+            this.id = user.getId();
+            this.username = user.getPhoneNumber();
             roles = Admin.HONTAREVA.equals(username) ? ROLES_USER_AND_ADMIN : ROLES_USER;
+        }
+
+        public Long getId() {
+            return id;
         }
 
         @Override
