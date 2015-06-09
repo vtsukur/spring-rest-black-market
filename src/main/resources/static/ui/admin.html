@@ -16,15 +16,11 @@
     <td><%= location.area %></td>
     <td><%= moment(publishedAt).format("MMM DD hh:mm:ss") %></td>
     <td><%= comment %></td>
-    <td><%= status %></td>
+    <td><%= !_links.publish ? "public" : "private" %></td>
 </script>
 <div class="container">
     <h1>Черный рынок валюты</h1>
     <a href="index.html">На главную</a>
-    <div id="page-links" class="text-center">
-        <a class="btn" id="prev">Предыдущая</a>
-        <a class="btn" id="next">Следующая</a>
-    </div>
     <table class="table table-bordered table-striped table-hover" id="ads-list">
         <thead>
         <tr>
