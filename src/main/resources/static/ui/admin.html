@@ -16,6 +16,7 @@
     <td><%= location.area %></td>
     <td><%= moment(publishedAt).format("MMM DD hh:mm:ss") %></td>
     <td><%= comment %></td>
+    <td><%= status %></td>
 </script>
 <div class="container">
     <h1>Черный рынок валюты</h1>
@@ -24,7 +25,7 @@
         <a class="btn" id="prev">Предыдущая</a>
         <a class="btn" id="next">Следующая</a>
     </div>
-    <table class="table table-bordered table-striped" id="ads-list">
+    <table class="table table-bordered table-striped table-hover" id="ads-list">
         <thead>
         <tr>
             <th>Количество</th>
@@ -36,6 +37,7 @@
             <th>Район</th>
             <th>Опубликовано</th>
             <th>Комментарий</th>
+            <th>Cтатус</th>
         </tr>
         </thead>
         <tbody>
