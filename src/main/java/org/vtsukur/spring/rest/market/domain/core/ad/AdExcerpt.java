@@ -1,5 +1,6 @@
 package org.vtsukur.spring.rest.market.domain.core.ad;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.rest.core.config.Projection;
 
@@ -11,7 +12,10 @@ import java.time.LocalDateTime;
  * @author volodymyr.tsukur
  */
 @Projection(name = "custom", types = Ad.class)
-public interface AdProjection {
+public interface AdExcerpt {
+
+    @JsonIgnore
+    Long getId();
 
     Ad.Type getType();
 
@@ -29,5 +33,8 @@ public interface AdProjection {
     String getComment();
 
     LocalDateTime getPublishedAt();
+
+    @JsonIgnore
+    Ad.Status getStatus();
 
 }
