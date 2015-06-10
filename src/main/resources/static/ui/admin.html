@@ -16,11 +16,20 @@
     <td><%= location.area %></td>
     <td><%= moment(publishedAt).format("MMM DD hh:mm:ss") %></td>
     <td><%= comment %></td>
-    <td><%= !_links.publish ? "public" : "private" %></td>
+    <% if (!_links.publish) { %>
+    <%     if (!_links.finish) { %>
+                <td>Закрыто</td>
+           <% } else { %>
+                <td>Опубликовано</td>
+        <% } %>
+    <% } else { %>
+        <td>Черновик</td>
+    <% } %>
 </script>
 <div class="container">
-    <h1>Черный рынок валюты</h1>
+    <h1>Черная админка</h1>
     <a href="index.html">На главную</a>
+    <!--     <td><%= !_links.publish ? "Опубликовано" : "Черновик" %></td> -->
     <table class="table table-bordered table-striped table-hover" id="ads-list">
         <thead>
         <tr>
@@ -39,6 +48,7 @@
         <tbody>
         </tbody>
     </table>
+    <a href="" id="createNew">Создать новую заявку</a>
     <form id="form" class ="form-horizontal"></form>
 </div>
 <script src="../js/libs/jquery/dist/jquery.min.js" type="text/javascript"></script>
