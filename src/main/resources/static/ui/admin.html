@@ -14,7 +14,7 @@
     <td><%= type %></td>
     <td><%= location.city %></td>
     <td><%= location.area %></td>
-    <td><%= moment(publishedAt).format("MMM DD hh:mm:ss") %></td>
+    <td><%= publishedAt ? moment(publishedAt).format("MMM DD hh:mm:ss") : "Не опубликовано" %></td>
     <td><%= comment %></td>
 </script>
 <div class="container">
