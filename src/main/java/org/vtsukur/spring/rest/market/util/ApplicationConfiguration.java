@@ -53,6 +53,15 @@ public class ApplicationConfiguration {
             "Шевченковский"
     };
 
+    private static final String[] LVIV_DISTRICTS = new String[] {
+            "Шевченківський",
+            "Личаківський",
+            "Сихівський",
+            "Франківський",
+            "Залізничний",
+            "Личаківський"
+    };
+
     private static final String[] COMMENTS = new String[] {
             "",
             "целиком",
@@ -191,7 +200,7 @@ public class ApplicationConfiguration {
     }
 
     private static String nextDistrict() {
-        return nextRandomFromArray(KYIV_DISTRICTS);
+        return nextRandomFromArray(LVIV_DISTRICTS);
     }
 
     private static String nextComments() {
