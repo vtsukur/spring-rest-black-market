@@ -160,7 +160,7 @@ public class ApplicationConfiguration {
         ad.setRate(nextRate(currency, type));
         ad.setUser(user);
 
-        ad.setLocation(new Ad.Location("Киев", nextDistrict()));
+        ad.setLocation(new Ad.Location("Львів", nextDistrict()));
         ad.setComment(nextComments());
         ad.setStatus(Ad.Status.PUBLISHED);
         ad.setPublishedAt(nextPublishingTime(publishedAt));
