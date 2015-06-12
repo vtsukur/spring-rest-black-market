@@ -194,8 +194,8 @@ public class ApplicationConfiguration {
 
     private static BigDecimal avgRate(Ad.Currency currency, Ad.Type type) {
         return (currency == Ad.Currency.USD ?
-                BigDecimal.valueOf(type == Ad.Type.BUY ? 21.81 : 22) :
-                BigDecimal.valueOf(type == Ad.Type.BUY ? 24.24 : 24.44)
+                BigDecimal.valueOf(type == Ad.Type.BUY ? 21.58 : 22.18) :
+                BigDecimal.valueOf(type == Ad.Type.BUY ? 24.2 : 24.67)
         );
     }
 
