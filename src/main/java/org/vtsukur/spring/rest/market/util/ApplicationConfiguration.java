@@ -85,9 +85,6 @@ public class ApplicationConfiguration {
         final LocalDateTime publishedAt = now.minusMinutes(PUBLISHING_TIME_MAX_DIFF * amount);
 
         SecurityUtils.run("system", "system", new String[]{"ROLE_ADMIN"}, () -> {
-            setupAdmin(publishedAt.minusMinutes(10));
-            setupStableUser(publishedAt);
-
             if (!stableUsersOnly) {
                 LocalDateTime at = publishedAt;
                 for (int i = 0; i < amount; ++i) {
@@ -100,6 +97,9 @@ public class ApplicationConfiguration {
                     at = ad.getPublishedAt();
                 }
             }
+
+            setupAdmin(publishedAt.minusMinutes(10));
+            setupStableUser(publishedAt);
         });
     }
 
