@@ -66,22 +66,16 @@ public class AdsHttpApiTests {
 
     @Test
     public void createAd() throws Exception {
-        Ad ad = new Ad();
-        ad.setType(Ad.Type.BUY);
-        ad.setAmount(BigInteger.valueOf(3000));
-        ad.setCurrency(Ad.Currency.USD);
-        ad.setRate(BigDecimal.valueOf(21.5));
-        ad.setLocation(new Ad.Location("Kyiv", "Obolon"));
-        ad.setComment("partial deal is OK");
-        ad.setUser(referenceUser);
+        Ad ad = ad();
+        String requestBody = saveRequestJsonString(ad);
 
-        String content = saveRequestJsonString(ad);
         ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders
                 .post("/ads")
                 .accept(MediaTypes.HAL_JSON)
-                .content(content)
+                .content(requestBody)
                 .contentType(MediaType.APPLICATION_JSON));
-        final Ad createdBooking = adRepository.findAll(new Sort(Sort.Direction.DESC, "id")).iterator().next();
+
+        final Ad createdBooking = findCreatedBooking();
         resultActions.andExpect(status().isCreated())
                 .andExpect(header().string(HttpHeaders.LOCATION, "http://localhost:8080/ads/" + createdBooking.getId()))
                 .andExpect(jsonPath("$.type", is(ad.getType().name())))
@@ -91,6 +85,22 @@ public class AdsHttpApiTests {
                 .andExpect(jsonPath("$.location.city", is(ad.getLocation().getCity())))
                 .andExpect(jsonPath("$.location.area", is(ad.getLocation().getArea())))
                 .andExpect(jsonPath("$.comment", is(ad.getComment())));
+    }
+
+    private Ad findCreatedBooking() {
+        return adRepository.findAll(new Sort(Sort.Direction.DESC, "id")).iterator().next();
+    }
+
+    private Ad ad() {
+        Ad ad = new Ad();
+        ad.setType(Ad.Type.BUY);
+        ad.setAmount(BigInteger.valueOf(9999));
+        ad.setCurrency(Ad.Currency.USD);
+        ad.setRate(BigDecimal.valueOf(21.5));
+        ad.setLocation(new Ad.Location("Lviv", "Airport"));
+        ad.setComment("need it now!");
+        ad.setUser(referenceUser);
+        return ad;
     }
 
     private static String saveRequestJsonString(Ad ad) {
