@@ -64,9 +64,10 @@ public class ApplicationConfiguration {
 
     private static final String[] COMMENTS = new String[] {
             "",
-            "целиком",
-            "можно частями",
-            "малыш, я подъеду"
+            "всю суму",
+            "ну дуже треба",
+            "можна частинами",
+            "маленький, можу під'їхати"
     };
     public static final int PUBLISHING_TIME_MAX_DIFF = 4;
 
