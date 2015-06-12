@@ -16,7 +16,12 @@
     <td><%= location.area %></td>
     <td><%= moment(publishedAt).format("MMM DD hh:mm:ss") %></td>
     <td><%= comment %></td>
-    <% if (!_links.publish) { %>
+</script>
+<div class="container">
+    <h1>Черная админка</h1>
+    <a href="index.html">На главную</a>
+    <!--
+        <% if (!_links.publish) { %>
     <%     if (!_links.finish) { %>
                 <td>Закрыто</td>
            <% } else { %>
@@ -25,11 +30,7 @@
     <% } else { %>
         <td>Черновик</td>
     <% } %>
-</script>
-<div class="container">
-    <h1>Черная админка</h1>
-    <a href="index.html">На главную</a>
-    <!--     <td><%= !_links.publish ? "Опубликовано" : "Черновик" %></td> -->
+    -->
     <table class="table table-bordered table-striped table-hover" id="ads-list">
         <thead>
         <tr>
@@ -42,7 +43,6 @@
             <th>Район</th>
             <th>Опубликовано</th>
             <th>Комментарий</th>
-            <th>Cтатус</th>
         </tr>
         </thead>
         <tbody>
@@ -55,7 +55,7 @@
 <script src="../js/libs/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
 <script src="../js/libs/uri-templates/uri-templates.min.js" type="text/javascript"></script>
 <script src="../js/libs/underscore/underscore-min.js" type="text/javascript"></script>
-<script src="../js/libs/backbone/backbone-min.js" type="text/javascript"></script>
+<script src="../js/libs/backbone/backbone.js" type="text/javascript"></script>
 <script src="../js/libs/backbone-relational/backbone-relational.js" type="text/javascript"></script>
 <script src="../js/libs/backbone-relational-hal/backbone-relational-hal.js" type="text/javascript"></script>
 <script src="../js/libs/backform/src/backform.js" type="text/javascript"></script>
