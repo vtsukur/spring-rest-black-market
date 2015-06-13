@@ -76,7 +76,7 @@ from resource to resource.
 [[resources-ads]]
 == Ads
 
-The Ads resource is used to create and list ads
+The Ads resource / 'ads' relation is used to create and list ads.
 
 [[resources-ads-create]]
 
