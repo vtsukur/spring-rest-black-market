@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <title>Черная админка</title>
     <link rel="stylesheet" href="../js/libs/bootstrap/dist/css/bootstrap.min.css">
+<style>
+    tr.highlight td {
+        background-color: #d3d3d3;
+    }
+</style>
 </head>
 <body>
 <script type="text/template" id="ad-template">
@@ -17,9 +22,15 @@
     <td><%= publishedAt ? moment(publishedAt).format("MMM DD hh:mm:ss") : "Не опубликовано" %></td>
     <td><%= comment %></td>
 </script>
+
 <div class="container">
     <h1>Черная админка</h1>
-    <a href="index.html">На главную</a>
+    <p>
+        <div class="row-fluid">
+            <a class="inline" href="index.html">На главную</a>
+            <div id="status" class="inline pull-right"></div>
+        </div>
+    </p>
     <!--
         <% if (!_links.publish) { %>
     <%     if (!_links.finish) { %>
