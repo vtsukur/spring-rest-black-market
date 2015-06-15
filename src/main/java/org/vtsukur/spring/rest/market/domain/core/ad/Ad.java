@@ -89,7 +89,7 @@ public class Ad implements Identifiable<Long> {
 
     }
 
-    public void publish() {
+    public Ad publish() {
         if (status == Status.NEW) {
             publishedAt = LocalDateTime.now();
             status = Status.PUBLISHED;
@@ -97,9 +97,10 @@ public class Ad implements Identifiable<Long> {
         else {
             throw new InvalidAdStateTransitionException("Ad is already published");
         }
+        return this;
     }
 
-    public void finish() {
+    public Ad finish() {
         if (status == Status.PUBLISHED) {
             status = Status.OUTDATED;
         }
@@ -107,6 +108,7 @@ public class Ad implements Identifiable<Long> {
             throw new InvalidAdStateTransitionException(
                     "Ad can be finished only when it is in the " + Status.PUBLISHED + " state");
         }
+        return this;
     }
 
 }
