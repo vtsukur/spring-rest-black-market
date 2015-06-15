@@ -15,15 +15,13 @@ public class AdService {
     public Ad publish(Long id) throws InvalidAdStateTransitionException {
         Ad ad = adRepository.findOne(id);
         ad.publish();
-        adRepository.save(ad);
-        return ad;
+        return adRepository.save(ad);
     }
 
     public Ad finish(Long id) throws InvalidAdStateTransitionException {
         Ad ad = adRepository.findOne(id);
         ad.finish();
-        adRepository.save(ad);
-        return ad;
+        return adRepository.save(ad);
     }
 
 }
