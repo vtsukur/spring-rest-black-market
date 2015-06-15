@@ -85,7 +85,7 @@ public class Ad implements Identifiable<Long> {
 
         PUBLISHED,
 
-        OUTDATED
+        EXPIRED
 
     }
 
@@ -102,7 +102,7 @@ public class Ad implements Identifiable<Long> {
 
     public Ad finish() {
         if (status == Status.PUBLISHED) {
-            status = Status.OUTDATED;
+            status = Status.EXPIRED;
         }
         else {
             throw new InvalidAdStateTransitionException(
