@@ -100,7 +100,7 @@ public class Ad implements Identifiable<Long> {
         return this;
     }
 
-    public Ad finish() {
+    public Ad expire() {
         if (status == Status.PUBLISHED) {
             status = Status.EXPIRED;
         }

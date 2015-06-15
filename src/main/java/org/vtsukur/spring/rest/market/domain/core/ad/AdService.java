@@ -17,7 +17,7 @@ public class AdService {
     }
 
     public Ad finish(Long id) throws InvalidAdStateTransitionException {
-        return findDoAndSave(id, Ad::finish);
+        return findDoAndSave(id, Ad::expire);
     }
 
     private Ad findDoAndSave(Long id, Action action) {

@@ -28,7 +28,7 @@ public class AdResourceController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/ads/{id}/finish", method = RequestMethod.POST, produces = "application/hal+json")
+    @RequestMapping(value = "/ads/{id}/expire", method = RequestMethod.POST, produces = "application/hal+json")
     public PersistentEntityResource finish(@PathVariable("id") Long id, PersistentEntityResourceAssembler assembler)
             throws InvalidAdStateTransitionException {
         return assembler.toFullResource(adService.finish(id));
