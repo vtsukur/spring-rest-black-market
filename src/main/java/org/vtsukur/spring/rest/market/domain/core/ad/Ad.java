@@ -106,7 +106,7 @@ public class Ad implements Identifiable<Long> {
         }
         else {
             throw new InvalidAdStateTransitionException(
-                    "Ad can be finished only when it is in the " + Status.PUBLISHED + " state");
+                    "Ad can be expire only when it is in the " + Status.PUBLISHED + " state");
         }
         return this;
     }

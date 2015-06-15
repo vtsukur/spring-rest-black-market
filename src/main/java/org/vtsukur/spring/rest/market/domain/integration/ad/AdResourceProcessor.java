@@ -34,7 +34,7 @@ public class AdResourceProcessor implements ResourceProcessor<Resource<AdExcerpt
                 resource.add(linkTo(methodOn(AdResourceController.class).publish(ad.getId(), null)).withRel("publish"));
             }
             if (status == Ad.Status.PUBLISHED) {
-                resource.add(linkTo(methodOn(AdResourceController.class).finish(ad.getId(), null)).withRel("expire"));
+                resource.add(linkTo(methodOn(AdResourceController.class).expire(ad.getId(), null)).withRel("expire"));
             }
         }
         return resource;
