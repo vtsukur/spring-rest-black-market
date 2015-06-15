@@ -13,15 +13,24 @@ public class AdService {
     private AdRepository adRepository;
 
     public Ad publish(Long id) throws InvalidAdStateTransitionException {
-        Ad ad = adRepository.findOne(id);
-        ad.publish();
-        return adRepository.save(ad);
+        return findDoAndSave(id, Ad::publish);
     }
 
     public Ad finish(Long id) throws InvalidAdStateTransitionException {
-        Ad ad = adRepository.findOne(id);
-        ad.finish();
-        return adRepository.save(ad);
+        return findDoAndSave(id, Ad::finish);
+    }
+
+    private Ad findDoAndSave(Long id, Action action) {
+        Ad foundAd = adRepository.findOne(id);
+        Ad modifiedAd = action.perform(foundAd);
+        return adRepository.save(modifiedAd);
+    }
+
+    @FunctionalInterface
+    private interface Action {
+
+        Ad perform(Ad ad);
+
     }
 
 }
