@@ -9,6 +9,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
 import org.springframework.data.rest.webmvc.config.RepositoryRestMvcConfiguration;
+import org.springframework.hateoas.UriTemplate;
+import org.springframework.hateoas.hal.CurieProvider;
+import org.springframework.hateoas.hal.DefaultCurieProvider;
 import org.springframework.stereotype.Component;
 import org.vtsukur.spring.rest.market.domain.core.ad.Ad;
 import org.vtsukur.spring.rest.market.domain.core.user.User;
@@ -233,6 +236,11 @@ public class ApplicationConfiguration {
     @Bean
     public Module newJSR310Module() {
         return new JSR310Module();
+    }
+
+    @Bean
+    public CurieProvider curieProvider() {
+        return new DefaultCurieProvider("currency-black-market", new UriTemplate("http://localhost:8080/alps/{rel}"));
     }
 
     @Configuration
