@@ -272,17 +272,17 @@ public class ApplicationConfiguration extends WebSecurityConfigurerAdapter {
         return new JSR310Module();
     }
 
-    @Bean
-    public CurieProvider curieProvider() {
-        return new DefaultCurieProvider("currency-black-market", new UriTemplate("http://localhost:8080/alps/{rel}"));
-    }
-
     @Configuration
     public static class CustomRepositoryRestMvcConfiguration extends RepositoryRestMvcConfiguration {
 
         @Override
         protected void configureRepositoryRestConfiguration(RepositoryRestConfiguration config) {
             config.exposeIdsFor(Ad.class);
+        }
+
+        @Bean
+        public CurieProvider curieProvider() {
+            return new DefaultCurieProvider("currency-black-market", new UriTemplate("http://localhost:8080/alps/{rel}"));
         }
 
     }
