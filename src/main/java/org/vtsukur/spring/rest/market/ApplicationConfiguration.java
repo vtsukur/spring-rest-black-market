@@ -1,4 +1,4 @@
-package org.vtsukur.spring.rest.market.util;
+package org.vtsukur.spring.rest.market;
 
 import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.datatype.jsr310.JSR310Module;
@@ -6,12 +6,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
 import org.springframework.data.rest.webmvc.config.RepositoryRestMvcConfiguration;
-import org.springframework.stereotype.Component;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.data.repository.query.SecurityEvaluationContextExtension;
 import org.vtsukur.spring.rest.market.domain.core.ad.Ad;
+import org.vtsukur.spring.rest.market.domain.core.ad.AdRepository;
 import org.vtsukur.spring.rest.market.domain.core.user.User;
+import org.vtsukur.spring.rest.market.domain.core.user.UserRepository;
+import org.vtsukur.spring.rest.market.infrastructure.CustomUserDetailsService;
 import org.vtsukur.spring.rest.market.infrastructure.SecurityUtils;
 
 import java.math.BigDecimal;
@@ -22,8 +29,9 @@ import java.util.Random;
 /**
  * @author volodymyr.tsukur
  */
-@Component
-public class ApplicationConfiguration {
+@Configuration
+@EnableGlobalMethodSecurity(prePostEnabled = true)
+public class ApplicationConfiguration extends WebSecurityConfigurerAdapter {
 
     private static final Integer[] MOBILE_OPERATOR_CODES = new Integer[] {
             39,
@@ -72,12 +80,38 @@ public class ApplicationConfiguration {
     public static final int PUBLISHING_TIME_MAX_DIFF = 4;
 
     @Autowired
-    private CrudRepository<User, Long> userRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    private CrudRepository<Ad, Long> adRepository;
+    private AdRepository adRepository;
+
+    @Autowired
+    private CustomUserDetailsService customUserDetailsService;
 
     private boolean stableUsersOnly;
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(customUserDetailsService);
+    }
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.httpBasic().and()
+                .authorizeRequests()
+                .antMatchers(HttpMethod.GET, "/ui/admin.html").hasRole("USER")
+                .antMatchers(HttpMethod.POST, "/ads/**").hasRole("USER")
+                .antMatchers(HttpMethod.PUT, "/ads/**").hasRole("USER")
+                .antMatchers(HttpMethod.PATCH, "/ads/**").hasRole("USER")
+                .antMatchers(HttpMethod.DELETE, "/ads/**").hasRole("USER")
+                .and()
+                .csrf().disable();
+    }
+
+    @Bean
+    public SecurityEvaluationContextExtension securityEvaluationContextExtension() {
+        return new SecurityEvaluationContextExtension();
+    }
 
     public void load() {
         int amount = 100;
