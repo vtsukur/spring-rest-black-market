@@ -14,9 +14,6 @@ import org.springframework.data.rest.core.annotation.RestResource;
 @RepositoryRestResource(excerptProjection = AdExcerpt.class)
 public interface AdRepository extends PagingAndSortingRepository<Ad, Long> {
 
-    @RestResource(rel = "by", path = "by")
-    Page<Ad> findByTypeAndCurrency(@Param("type") Ad.Type type, @Param("currency") Ad.Currency currency, Pageable pageable);
-
     @RestResource(rel = "published", path = "published")
     @Query("select ad from Ad ad where ad.type = :#{#type} and ad.currency = :#{#currency} and ad.status = 'PUBLISHED'")
     Page<Ad> findPublishedByTypeAndCurrency(@Param("type") Ad.Type type, @Param("currency") Ad.Currency currency, Pageable pageable);
