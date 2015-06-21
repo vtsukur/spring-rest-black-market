@@ -232,8 +232,8 @@ public class ApplicationConfiguration extends WebSecurityConfigurerAdapter {
 
     private static BigDecimal avgRate(Ad.Currency currency, Ad.Type type) {
         return (currency == Ad.Currency.USD ?
-                BigDecimal.valueOf(type == Ad.Type.BUY ? 21.58 : 22.18) :
-                BigDecimal.valueOf(type == Ad.Type.BUY ? 24.2 : 24.67)
+                BigDecimal.valueOf(type == Ad.Type.BUY ? 22.11 : 22.55) :
+                BigDecimal.valueOf(type == Ad.Type.BUY ? 25.32 : 25.71)
         );
     }
 
