@@ -53,7 +53,7 @@ dependencies {
 
   // Spring Data REST.
   compile("org.springframework.boot:spring-boot-starter-data-rest")
-  compile("org.springframework.data:spring-data-rest-webmvc:2.4.0.M1")
+  compile("org.springframework.data:spring-data-rest-webmvc:2.3.0.RELEASE")
 
   // Spring Security.
   compile("org.springframework.boot:spring-boot-starter-security")
