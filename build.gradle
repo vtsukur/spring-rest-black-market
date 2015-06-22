@@ -3,7 +3,7 @@ buildscript {
     mavenCentral()
   }
   dependencies {
-    classpath("org.springframework.boot:spring-boot-gradle-plugin:1.2.3.RELEASE")
+    classpath("org.springframework.boot:spring-boot-gradle-plugin:1.2.4.RELEASE")
     classpath("io.spring.gradle:dependency-management-plugin:0.5.0.RELEASE")
   }
 }
@@ -46,13 +46,14 @@ repositories {
 dependencies {
   // For domain modeling + Spring Data JPA.
   compile("org.springframework.boot:spring-boot-starter-data-jpa")
+  compile("org.springframework.data:spring-data-jpa:1.8.0.RELEASE")
   compile("org.hsqldb:hsqldb")
   compile("org.projectlombok:lombok:1.16.4")
   compile("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
 
   // Spring Data REST.
   compile("org.springframework.boot:spring-boot-starter-data-rest")
-  compile("org.springframework.data:spring-data-rest-webmvc:2.3.0.RELEASE")
+  compile("org.springframework.data:spring-data-rest-webmvc:2.4.0.M1")
 
   // Spring Security.
   compile("org.springframework.boot:spring-boot-starter-security")
@@ -64,7 +65,7 @@ dependencies {
   testCompile("org.springframework.boot:spring-boot-starter-test")
   testCompile("junit:junit:4.12")
   testCompile("com.jayway.jsonpath:json-path:2.0.0")
-  testCompile("org.springframework.restdocs:spring-restdocs:0.1.0.BUILD-SNAPSHOT")
+  testCompile("org.springframework.restdocs:spring-restdocs:1.0.0.BUILD-SNAPSHOT")
 }
 
 test {
