@@ -15,7 +15,7 @@ var View = Backbone.View.extend({
             next = this.$("#next"),
             prev = this.$("#prev");
         $tbody.empty();
-        _.each(this.model.embedded("ads"), function(data) {
+        _.each(this.model.embedded("currency-black-market:ads"), function(data) {
             $tbody.append(new adView({model : data}).render().el);
         }, this);
         this.model.link("next") ? next.show() : next.hide();
@@ -53,7 +53,7 @@ var AdsModel = Backbone.RelationalHalResource.extend({});
 var ads = new AdsModel();
 
 api.jsonHal()
-    .follow('ads')
+    .follow('currency-black-market:ads')
     .getUri(function(err, uri) {
         if (err) {
             console.log(err);
