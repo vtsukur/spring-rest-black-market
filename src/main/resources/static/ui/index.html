@@ -15,7 +15,7 @@
     <td><%= type %></td>
     <td><%= location.city %></td>
     <td><%= location.area %></td>
-    <td><%= moment(publishedAt).format("MMM DD hh:mm:ss") %></td>
+    <td><%= publishedAt %></td>
     <td><%= comment %></td>
 </script>
 <div class="container">
@@ -43,18 +43,8 @@
         </tbody>
     </table>
 </div>
-<script src="../js/libs/jquery/dist/jquery.min.js" type="text/javascript"></script>
-<script src="../js/libs/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
-<script src="../js/libs/uri-templates/uri-templates.min.js" type="text/javascript"></script>
-<script src="../js/libs/underscore/underscore-min.js" type="text/javascript"></script>
-<script src="../js/libs/backbone/backbone-min.js" type="text/javascript"></script>
-<script src="../js/libs/backbone-relational/backbone-relational.js" type="text/javascript"></script>
-<script src="../js/libs/backbone-relational-hal/backbone-relational-hal.js" type="text/javascript"></script>
-<script src="../js/libs/traverson/browser/dist/traverson.min.js"></script>
-<script src="../js/libs/traverson-hal/browser/dist/traverson-hal.js"></script>
-<script src="../js/libs/moment/moment.js" type="text/javascript"></script>
-<script src="../js/libs/uri.js/src/URI.min.js"></script>
-<script src="../js/app.js" type="text/javascript"></script>
+
+<script src="../main.js" type="text/javascript"></script>
 
 </body>
 </html>
