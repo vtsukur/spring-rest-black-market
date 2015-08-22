@@ -18,15 +18,6 @@ var Resource = function(api, AdsModel, adsCollection) {
                     self.url = uri;
                     self.updateCollection();
                 });
-            api.jsonHal()
-                .follow(prefix + "users", "search", prefix + "current-user")
-                .getResource(function (err, res) {
-                    if (err) {
-                        console.log(err);
-                        return;
-                    }
-                    self.set("user", res._links.self.href); //TODO save and use for make create
-                });
         },
 
         updateCollection: function () {

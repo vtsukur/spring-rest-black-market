@@ -1,18 +1,45 @@
 var Controller = function (controllerConfig) {
+    this.adsCollection = controllerConfig.adsCollection;
+    this.ad = controllerConfig.ad;
+    this.Model = controllerConfig.Model;
     this.status = $("#status");
-};
-
-
-Controller.prototype.getFields = function (callback) {
-    var JsonHalAdapter = require("traverson-hal"),
-        fields = require("./formFields.js"),
+    this.prefix = "currency-black-market:";
+    var rootUri = '/',
+        JsonHalAdapter = require("traverson-hal"),
         traverson = require("traverson");
 
     traverson.registerMediaType(JsonHalAdapter.mediaType,
         JsonHalAdapter);
 
-    var api = traverson.from('/');
-    api.jsonHal()
+    this.api = traverson.from(rootUri);
+    var self = this;
+    var Resource = Backbone.RelationalHalResource.extend({
+        initialize: function() {
+            self.api.jsonHal()
+                .follow(self.prefix + "ads", "search", self.prefix + "my")
+                .getUri(function (err, uri) {
+                    if (err) {
+                        console.log(err);
+                        return;
+                    }
+                    this.url = uri;
+                    this.fetch();
+                }.bind(this));
+        }
+    });
+    this.resource = new Resource();
+    var views = require("./views/private.js");
+    new views.View({
+        model: this.resource,
+        adModel: this.ad,
+        controller: this
+    }).render();
+};
+
+Controller.prototype.fetchFields = function (callback) {
+    var fields = require("./formFields.js");
+
+    this.api.jsonHal()
         .follow("profile")
         .getResource(function (err, res) {
             if (err) {
@@ -48,7 +75,6 @@ Controller.prototype.getFields = function (callback) {
 };
 
 Controller.prototype.getOperations = function (model, form) {
-    this.setModel(model);
     ["update", "create", "publish", "delete", "expire"].forEach(function (relation) {
         this.initOperation(model, relation, form);
     }, this);
@@ -56,24 +82,11 @@ Controller.prototype.getOperations = function (model, form) {
 
 Controller.prototype.initOperation = function (model, relation, form) {
     var el = form.$el.find("." + relation);
-    model.hasLink("currency-black-market:" + relation) ? el.removeClass("hide") : el.addClass("hide");
+    form.model.hasLink(this.prefix + relation) ? el.removeClass("hide") : el.addClass("hide");
 };
 
-Controller.prototype.createNew = function () {
-    this.setModel(this.ad);
-};
-
-Controller.prototype.setModel = function (model) {
-    this.model = model;
-};
-
-Controller.prototype.getModel = function () {
-    return this.model;
-};
-
-Controller.prototype.makeAction = function (action, data) {
+Controller.prototype.makeAction = function (action, model) {
     var self = this,
-        model = this.getModel(),
         options = {},
         actions = {
             "create" : "create",
@@ -92,14 +105,15 @@ Controller.prototype.makeAction = function (action, data) {
 
     if (action !== "create") {
         options = {
-            url: model.link("currency-black-market:" + action).href()
+            url: model.link(this.prefix + action).href()
         }
     }
-    model.set(data, {silent: true});
+    //TODO fix dirty trick
+    model.get("location").city = "Roma";
+    model.get("location").area = "Vatican";
     model.sync(actions[action], model, options)
         .done(function () {
-            ordersResource.updateCollection();
-            self.createNew();
+            self.resource.fetch();
             self.status.text("Ваша заявка успешно " + status[action]);
             setTimeout(function () {
                 self.status.text("");
