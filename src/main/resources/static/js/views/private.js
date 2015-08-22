@@ -60,6 +60,8 @@ var $ = require("jquery"),
         events: {
             "click": function () {
                 this.form.model.set(this.model);
+                this.form.model.set("location.area", this.model.location.area)
+                this.form.model.set("location.city", this.model.location.city)
                 this.form.model.set("_links", this.model._links);
                 this.controller.getOperations(this.model, this.form);
                 this.$el.addClass("highlight").siblings().removeClass("highlight");
@@ -73,30 +75,39 @@ var $ = require("jquery"),
             Backform.Form.prototype.initialize.apply(this, arguments);
         },
         el: $("#form"),
+        normalizeModel: function () {
+            this.model.set("locatioin.area", undefined);
+            this.model.set("locatioin.city", undefined);
+        },
         events: {
             "click .update": function (e) {
                 e.preventDefault();
+                this.normalizeModel();
                 this.controller.makeAction("update", this.model);
                 return false;
             },
             "click .create": function (e) {
                 e.preventDefault();
+                this.normalizeModel();
                 this.controller.makeAction("create", this.model);
                 return false;
             },
             "click .publish": function (e) {
                 e.preventDefault();
+                this.normalizeModel();
                 this.controller.makeAction("publish", this.model);
                 return false;
             },
             "click .expire": function (e) {
                 e.preventDefault();
+                this.normalizeModel();
                 this.model.set("status", "OUTDATED");
                 this.controller.makeAction("expire", this.model);
                 return false;
             },
             "click .delete": function (e) {
                 e.preventDefault();
+                this.normalizeModel();
                 this.controller.makeAction("delete", this.model);
                 return false;
             }

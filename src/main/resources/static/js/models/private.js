@@ -6,7 +6,7 @@ var rootUri = "/",
     prefix = "currency-black-market:",
     JsonHalAdapter = require("traverson-hal"),
     traverson = require("traverson");
-    //TODO remove that -^
+
 
 traverson.registerMediaType(JsonHalAdapter.mediaType,
     JsonHalAdapter);
