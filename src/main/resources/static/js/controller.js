@@ -1,22 +1,17 @@
 var Controller = function (controllerConfig) {
     this.status = $("#status");
-    this.initialize(controllerConfig);
 };
 
 
 Controller.prototype.getFields = function (callback) {
-    setTimeout(function() {
-        callback.call(1,2);
-    }, 5000);
-};
-Controller.prototype.initialize = function (config) {
-    var self = this,
-        api = config.api,
-        fields = require("./formFields.js");
+    var JsonHalAdapter = require("traverson-hal"),
+        fields = require("./formFields.js"),
+        traverson = require("traverson");
 
-    self.ad = config.ad;
-    self.ordersResource = config.ordersResource;
+    traverson.registerMediaType(JsonHalAdapter.mediaType,
+        JsonHalAdapter);
 
+    var api = traverson.from('/');
     api.jsonHal()
         .follow("profile")
         .getResource(function (err, res) {
@@ -44,7 +39,7 @@ Controller.prototype.initialize = function (config) {
                                     });
                                 }
                             });
-                            //self.renderForm(self.ad, fields);
+                            callback.call(this, fields);
                         }
                     });
                 });
@@ -52,24 +47,20 @@ Controller.prototype.initialize = function (config) {
         });
 };
 
-Controller.prototype.getOperations = function (model) {
+Controller.prototype.getOperations = function (model, form) {
     this.setModel(model);
     ["update", "create", "publish", "delete", "expire"].forEach(function (relation) {
-        this.initOperation(model, relation);
+        this.initOperation(model, relation, form);
     }, this);
 };
 
-Controller.prototype.initOperation = function (model, relation) {
-    var el = this.getForm().$el.find("." + relation);
+Controller.prototype.initOperation = function (model, relation, form) {
+    var el = form.$el.find("." + relation);
     model.hasLink("currency-black-market:" + relation) ? el.removeClass("hide") : el.addClass("hide");
 };
 
 Controller.prototype.createNew = function () {
     this.setModel(this.ad);
-    this.getForm().model.set(this.ad.defaults);
-    this.getForm().model.set("user", this.ordersResource.get("user"));
-    this.getForm().$el.find(".form-group.ctrl:not(.create)").addClass("hide");
-    this.getForm().$el.find(".create").removeClass("hide");
 };
 
 Controller.prototype.setModel = function (model) {
@@ -78,10 +69,6 @@ Controller.prototype.setModel = function (model) {
 
 Controller.prototype.getModel = function () {
     return this.model;
-};
-
-Controller.prototype.getForm = function () {
-    return this.form || {};
 };
 
 Controller.prototype.makeAction = function (action, data) {
@@ -121,46 +108,6 @@ Controller.prototype.makeAction = function (action, data) {
         .fail(function (error) {
             console.error(error);
         });
-};
-
-Controller.prototype.renderForm = function (model, fields) {
-    var self = this,
-        Backform = require("backform");
-
-    this.form = new Backform.Form({
-        el: $("#form"),
-        model: model,
-        fields: fields,
-        events: {
-            "click .update": function (e) {
-                e.preventDefault();
-                self.makeAction("update", this.model.toJSON());
-                return false;
-            },
-            "click .create": function (e) {
-                e.preventDefault();
-                this.model.set("user", self.ordersResource.get("user"));
-                self.makeAction("create", this.model.toJSON());
-                return false;
-            },
-            "click .publish": function (e) {
-                e.preventDefault();
-                self.makeAction("publish", this.model.toJSON());
-                return false;
-            },
-            "click .expire": function (e) {
-                e.preventDefault();
-                this.model.set("status", "OUTDATED");
-                self.makeAction("expire", this.model.toJSON());
-                return false;
-            },
-            "click .delete": function (e) {
-                e.preventDefault();
-                self.makeAction("delete", this.model.toJSON());
-                return false;
-            }
-        }
-    }).render();
 };
 
 module.exports = Controller;

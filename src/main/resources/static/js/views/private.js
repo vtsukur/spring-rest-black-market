@@ -11,20 +11,30 @@
             this.controller = options.controller;
             _.bindAll(this, "render");
             this.model.bind("change reset", this.render);
-            var form = new Form({model: this.model, controller: this.controller});
-            form.render();
+            this.controller.getFields(function (fields) {
+                this.form = new Form({model: this.model, fields: fields});
+                this.form.render();
+            }.bind(this));
         },
         render: function () {
             var $tbody = this.$("#ads-list tbody");
             $tbody.empty();
             _.each(this.model.models, function (data) {
-                $tbody.append(new AdView({model: data, controller: this.controller}).render().el);
+                $tbody.append(new AdView({
+                    model: data,
+                    controller: this.controller,
+                    form: this.form
+                }).render().el);
             }, this);
         },
         events: {
             "click #createNew": function (e) {
                 this.$el.find("tr").removeClass("highlight");
                 e.preventDefault();
+                this.form.model.set(this.ad.defaults);
+                this.form.model.set("user", this.ordersResource.get("user"));
+                this.form.$el.find(".form-group.ctrl:not(.create)").addClass("hide");
+                this.form.$el.find(".create").removeClass("hide");
                 this.controller.createNew();
             }
         }
@@ -33,6 +43,7 @@
     var AdView = Backbone.View.extend({
         initialize: function (options) {
             this.controller = options.controller;
+            this.form = options.form;
         },
         tagName: "tr",
         template: _.template($("#ad-template").html()),
@@ -42,8 +53,8 @@
         },
         events: {
             "click": function () {
-                this.controller.getForm().model.set(this.model.toJSON());
-                this.controller.getOperations(this.model);
+                this.form.model.set(this.model.toJSON());
+                this.controller.getOperations(this.model, this.form);
                 this.$el.addClass("highlight").siblings().removeClass("highlight");
             }
         }
@@ -51,12 +62,8 @@
 
     var Form = Backform.Form.extend({
         initialize: function (options) {
-            var self = this;
+            Backform.Form.prototype.initialize.apply(this, arguments);
             this.controller = options.controller;
-            this.controller.getFields(function (model, fields) {
-                console.log(model, fields);
-                self.fields = fields;
-            });
         },
         el: $("#form"),
         fields: [{
