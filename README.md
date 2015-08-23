@@ -10,7 +10,7 @@ Project uses [Gradle](http://gradle.org/) as a build tool. Building is as easy a
 
     ./gradlew build
 
-This is the respective shell command to run Windows:
+This is the respective shell command to run on Windows:
 
     gradlew build
 
