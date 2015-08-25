@@ -3,6 +3,17 @@ var $ = require("jquery"),
         Backbone = require("backbone"),
         Backform = require("backform");
 
+    // Temporary fix until npm is outdated;
+    Backform.ButtonControl.prototype.template = _.template([
+        '<label class="<%=Backform.controlLabelClassName%>">&nbsp;</label>',
+        '<div class="<%=Backform.controlsClassName%>">',
+        '  <button type="<%=type%>" name="<%=name%>" class="btn <%=extraClasses.join(\' \')%>" <%=disabled ? "disabled" : ""%> ><%=label%></button>',
+        '  <% var cls = ""; if (status == "error") cls = Backform.buttonStatusErrorClassName; if (status == "success") cls = Backform.buttonStatusSuccessClassname; %>',
+        '  <span class="status <%=cls%>"><%=message%></span>',
+        '</div>'
+    ].join("\n"));
+
+
     var View = Backbone.View.extend({
         el: $(".container"),
         initialize: function (options) {
@@ -34,15 +45,17 @@ var $ = require("jquery"),
                 }).render().el);
             }, this);
         },
-        createNew: function (e) {
-            if (e) e.preventDefault();
+        createNew: function () {
             this.$el.find("tr").removeClass("highlight");
+            this.controller.setDefault(this.form.model);
             this.form.model.set(this.form.model.defaults);
             this.form.$el.find(".form-group.ctrl:not(.create)").addClass("hide");
             this.form.$el.find(".create").removeClass("hide");
         },
         events: {
-            "click #createNew": this.createNew
+            "click #createNew": function() {
+                this.createNew();
+            }
         }
     });
 
@@ -60,8 +73,6 @@ var $ = require("jquery"),
         events: {
             "click": function () {
                 this.form.model.set(this.model);
-                this.form.model.set("location.area", this.model.location.area)
-                this.form.model.set("location.city", this.model.location.city)
                 this.form.model.set("_links", this.model._links);
                 this.controller.getOperations(this.model, this.form);
                 this.$el.addClass("highlight").siblings().removeClass("highlight");
@@ -75,39 +86,30 @@ var $ = require("jquery"),
             Backform.Form.prototype.initialize.apply(this, arguments);
         },
         el: $("#form"),
-        normalizeModel: function () {
-            this.model.set("locatioin.area", undefined);
-            this.model.set("locatioin.city", undefined);
-        },
         events: {
             "click .update": function (e) {
                 e.preventDefault();
-                this.normalizeModel();
                 this.controller.makeAction("update", this.model);
                 return false;
             },
             "click .create": function (e) {
                 e.preventDefault();
-                this.normalizeModel();
                 this.controller.makeAction("create", this.model);
                 return false;
             },
             "click .publish": function (e) {
                 e.preventDefault();
-                this.normalizeModel();
                 this.controller.makeAction("publish", this.model);
                 return false;
             },
             "click .expire": function (e) {
                 e.preventDefault();
-                this.normalizeModel();
                 this.model.set("status", "OUTDATED");
                 this.controller.makeAction("expire", this.model);
                 return false;
             },
             "click .delete": function (e) {
                 e.preventDefault();
-                this.normalizeModel();
                 this.controller.makeAction("delete", this.model);
                 return false;
             }

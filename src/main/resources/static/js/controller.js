@@ -75,17 +75,49 @@ Controller.prototype.fetchFields = function (callback) {
 };
 
 Controller.prototype.getOperations = function (model, form) {
+    this.normalizeModel(model, form);
     ["update", "create", "publish", "delete", "expire"].forEach(function (relation) {
         this.initOperation(model, relation, form);
     }, this);
+    var fields = form.$el.find(".form-control:not(.ctrl)");
+    if (form.model.hasLink(this.prefix + "expire")) {
+        fields.each(function (idx, field) {
+            field.disabled = true;
+        });
+    } else {
+        fields.each(function (idx, field) {
+            field.disabled = false;
+        });
+    }
 };
 
 Controller.prototype.initOperation = function (model, relation, form) {
-    var el = form.$el.find("." + relation);
-    form.model.hasLink(this.prefix + relation) ? el.removeClass("hide") : el.addClass("hide");
+    var ctrl = form.$el.find("." + relation);
+    form.model.hasLink(this.prefix + relation) ? ctrl.removeClass("hide") : ctrl.addClass("hide");
+};
+
+Controller.prototype.normalizeModel = function (model, form) {
+    if (model.get && model.get("location.area") && model.get("location.city")) {
+        model.set("location", {
+            area: model.get("location.area"),
+            city: model.get("location.city")
+        });
+        model.set("location.area", undefined);
+        model.set("location.city", undefined);
+    }
+    if (form) {
+        form.model.set("location.area", model.location.area);
+        form.model.set("location.city", model.location.city);
+    }
+};
+
+Controller.prototype.setDefault = function (model) {
+    this.normalizeModel(model);
+    model.set(model.defaults);
 };
 
 Controller.prototype.makeAction = function (action, model) {
+    this.normalizeModel(model);
     var self = this,
         options = {},
         actions = {
@@ -108,9 +140,7 @@ Controller.prototype.makeAction = function (action, model) {
             url: model.link(this.prefix + action).href()
         }
     }
-    //TODO fix dirty trick
-    model.get("location").city = "Roma";
-    model.get("location").area = "Vatican";
+
     model.sync(actions[action], model, options)
         .done(function () {
             self.resource.fetch();
