@@ -3,17 +3,6 @@ var $ = require("jquery"),
         Backbone = require("backbone"),
         Backform = require("backform");
 
-    // Temporary fix until npm is outdated;
-    Backform.ButtonControl.prototype.template = _.template([
-        '<label class="<%=Backform.controlLabelClassName%>">&nbsp;</label>',
-        '<div class="<%=Backform.controlsClassName%>">',
-        '  <button type="<%=type%>" name="<%=name%>" class="btn <%=extraClasses.join(\' \')%>" <%=disabled ? "disabled" : ""%> ><%=label%></button>',
-        '  <% var cls = ""; if (status == "error") cls = Backform.buttonStatusErrorClassName; if (status == "success") cls = Backform.buttonStatusSuccessClassname; %>',
-        '  <span class="status <%=cls%>"><%=message%></span>',
-        '</div>'
-    ].join("\n"));
-
-
     var View = Backbone.View.extend({
         el: $(".container"),
         initialize: function (options) {
