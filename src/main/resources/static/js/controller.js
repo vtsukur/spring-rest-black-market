@@ -1,9 +1,6 @@
-var Controller = function (controllerConfig) {
-    this.adsCollection = controllerConfig.adsCollection;
-    this.ad = controllerConfig.ad;
-    this.Model = controllerConfig.Model;
+var prefix = "currency-black-market:",
+    Controller = function (controllerConfig) {
     this.status = $("#status");
-    this.prefix = "currency-black-market:";
     var rootUri = '/',
         JsonHalAdapter = require("traverson-hal"),
         traverson = require("traverson");
@@ -16,7 +13,7 @@ var Controller = function (controllerConfig) {
     var Resource = Backbone.RelationalHalResource.extend({
         initialize: function() {
             self.api.jsonHal()
-                .follow(self.prefix + "ads", "search", self.prefix + "my")
+                .follow(prefix + "ads", "search", prefix + "my")
                 .getUri(function (err, uri) {
                     if (err) {
                         console.log(err);
@@ -28,96 +25,31 @@ var Controller = function (controllerConfig) {
         }
     });
     this.resource = new Resource();
-    var views = require("./views/private.js");
-    new views.View({
-        model: this.resource,
-        adModel: this.ad,
-        controller: this
-    }).render();
-};
-
-Controller.prototype.fetchFields = function (callback) {
-    var fields = require("./formFields.js");
-
-    this.api.jsonHal()
-        .follow("profile")
-        .getResource(function (err, res) {
-            if (err) {
-                console.log(err);
-                return;
-            }
-            var descriptors = res.descriptors,
-                getField = function (filedName) {
-                    return fields.filter(function (el) {
-                        return el.name === filedName;
-                    })[0];
-                };
-            descriptors.forEach(function (el) {
-                $.ajax({
-                    url: el.href
-                }).done(function (res) {
-                    $.each(res.descriptors, function (key, value) {
-                        if (value.id === "ad-representation") {
-                            $.each(value.descriptors, function (key, value) {
-                                if (value.name === "currency" || value.name === "type") {
-                                    getField(value.name).options = value.doc.value.split(",").map(function (el) {
-                                        var value = el.trim();
-                                        return {label: value, value: value};
-                                    });
-                                }
-                            });
-                            callback.call(this, fields);
-                        }
-                    });
-                });
-            });
-        });
 };
 
 Controller.prototype.getOperations = function (model, form) {
-    this.normalizeModel(model, form);
-    ["update", "create", "publish", "delete", "expire"].forEach(function (relation) {
-        this.initOperation(model, relation, form);
-    }, this);
-    var fields = form.$el.find(".form-control:not(.ctrl)");
-    if (form.model.hasLink(this.prefix + "expire")) {
-        fields.each(function (idx, field) {
-            field.disabled = true;
-        });
-    } else {
-        fields.each(function (idx, field) {
-            field.disabled = false;
-        });
-    }
+    var allOperations = ["update", "create", "publish", "delete", "expire"],
+        fields = form.$el.find(".form-control:not(.ctrl)");
+
+
+    fields.attr("disabled", !allOperations.filter(function(operation) {
+            this.initOperation(model, operation, form);
+            return form.model.hasLink(prefix + operation);
+        }.bind(this)).length || form.model.hasLink(prefix + "expire"));
+};
+
+Controller.prototype.getOperations2 = function (model, callback) {
+    callback(["update", "create", "publish", "delete", "expire"].filter(function(operation) {
+        return model.hasLink(prefix + operation);
+        }), model.hasLink(prefix + "expire"));
 };
 
 Controller.prototype.initOperation = function (model, relation, form) {
     var ctrl = form.$el.find("." + relation);
-    form.model.hasLink(this.prefix + relation) ? ctrl.removeClass("hide") : ctrl.addClass("hide");
-};
-
-Controller.prototype.normalizeModel = function (model, form) {
-    if (model.get && model.get("location.area") && model.get("location.city")) {
-        model.set("location", {
-            area: model.get("location.area"),
-            city: model.get("location.city")
-        });
-        model.set("location.area", undefined);
-        model.set("location.city", undefined);
-    }
-    if (form) {
-        form.model.set("location.area", model.location.area);
-        form.model.set("location.city", model.location.city);
-    }
-};
-
-Controller.prototype.setDefault = function (model) {
-    this.normalizeModel(model);
-    model.set(model.defaults);
+    form.model.hasLink(prefix + relation) ? ctrl.removeClass("hide") : ctrl.addClass("hide");
 };
 
 Controller.prototype.makeAction = function (action, model) {
-    this.normalizeModel(model);
     var self = this,
         options = {},
         actions = {
@@ -135,11 +67,8 @@ Controller.prototype.makeAction = function (action, model) {
             "delete" : "удалена"
         };
 
-    if (action !== "create") {
-        options = {
-            url: model.link(this.prefix + action).href()
-        }
-    }
+    if (action !== "create") options = { url: model.link(prefix + action).href() };
+    if (action === "expire") model.set("status", "OUTDATED");
 
     model.sync(actions[action], model, options)
         .done(function () {

@@ -1,5 +1,7 @@
 var $ = require("jquery"),
     _ = require("underscore"),
+    prefix = "currency-black-market:",
+    URI = require('URIjs');
     Backbone = require("backbone");
 
 var View = Backbone.View.extend({
@@ -9,20 +11,24 @@ var View = Backbone.View.extend({
         this.model.bind("change", this.render);
     },
     render: function () {
-        var $tbody = this.$("#ads-list tbody"),
-            next = this.$("#next"),
-            prev = this.$("#prev");
+        var $tbody = this.$("#ads-list tbody");
+
         $tbody.empty();
-        _.each(this.model.embedded("currency-black-market:ads"), function (data) {
+        _.each(this.model.embedded(prefix + "ads"), function (data) {
             $tbody.append(new AdView({model: data}).render().el);
         }, this);
-        this.model.link("next") ? next.show() : next.hide();
-        this.model.link("prev") ? prev.show() : prev.hide();
+
+        this.$("#next").toggle(!!this.model.link("next"));
+        this.$("#prev").toggle(!!this.model.link("prev"));
     },
     events: {
-        "click #next": "goNext",
-        "click #prev": "goPrev"
-    },
+/*        "click #next": "goNext",
+        "click #prev": "goPrev",*/
+        "click .navigation": function(e) {
+            e.preventDefault(e);
+            this.go(e.target.id);
+        }
+    },/*
     goNext: function (e) {
         e.preventDefault(e);
         this.go("next");
@@ -30,10 +36,10 @@ var View = Backbone.View.extend({
     goPrev: function (e) {
         e.preventDefault(e);
         this.go("prev");
-    },
+    },*/
     go: function (where) {
         var data = URI(this.model.link(where).href()).query(true);
-        ads.fetch({data: data});
+        this.model.fetch({data: data});
     }
 });
 
@@ -46,7 +52,7 @@ var AdView = Backbone.View.extend({
     }
 });
 
-module.export = {
+module.exports = {
     View: View,
     AdView: AdView
 };

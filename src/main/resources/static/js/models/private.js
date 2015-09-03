@@ -24,6 +24,7 @@ var AdsModel = Backbone.RelationalHalResource.extend({
                     return;
                 }
                 self.halUrl = uri;
+                $.extend(self.defaults, { _links: { self: { href: uri }}});
             });
         api.jsonHal()
             .follow(prefix + "users", "search", prefix + "current-user")

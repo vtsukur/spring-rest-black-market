@@ -1,31 +1,15 @@
 module.exports = function() {
-    var rootUri = '/',
-        JsonHalAdapter = require("traverson-hal"),
-        $ = require("jquery"),
-        _ = require("underscore"),
-        Backbone = require("backbone"),
-        traverson = require("traverson"),
-        api = traverson.from(rootUri);
-    require("backbone-relational");
-    require("backbone-relational-hal");
+    var views = require("./views/public.js");
 
-    traverson.registerMediaType(JsonHalAdapter.mediaType,
-        JsonHalAdapter);
+    var AdsModel = require("./models/public.js").AdsModel;
+    var ad = new AdsModel();
 
-    var AdsModel = Backbone.RelationalHalResource.extend({});
+    var Controller = require("./controller.js");
 
-    var ads = new AdsModel();
+    var controller = new Controller();
 
-    api.jsonHal()
-        .follow('currency-black-market:ads')
-        .getUri(function (err, uri) {
-            if (err) {
-                console.log(err);
-                return;
-            }
-            ads.url = uri;
-            ads.fetch();
-        });
-    var View = require("./views/public.js");
-    new View({model: ads}).render();
+    new views.View({
+        model: ad,
+        controller: controller
+    }).render();
 };
