@@ -1,5 +1,5 @@
 var prefix = "currency-black-market:",
-    Controller = function (controllerConfig) {
+    Controller = function () {
     this.status = $("#status");
     var rootUri = '/',
         JsonHalAdapter = require("traverson-hal"),

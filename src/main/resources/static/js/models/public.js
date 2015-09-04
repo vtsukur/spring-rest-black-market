@@ -46,6 +46,4 @@ var AdsModel = Backbone.RelationalHalResource.extend({
 });
 
 
-module.exports = {
-    AdsModel: AdsModel
-};
+module.exports = AdsModel;

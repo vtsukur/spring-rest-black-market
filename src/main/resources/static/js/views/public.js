@@ -22,21 +22,11 @@ var View = Backbone.View.extend({
         this.$("#prev").toggle(!!this.model.link("prev"));
     },
     events: {
-/*        "click #next": "goNext",
-        "click #prev": "goPrev",*/
         "click .navigation": function(e) {
             e.preventDefault(e);
             this.go(e.target.id);
         }
-    },/*
-    goNext: function (e) {
-        e.preventDefault(e);
-        this.go("next");
     },
-    goPrev: function (e) {
-        e.preventDefault(e);
-        this.go("prev");
-    },*/
     go: function (where) {
         var data = URI(this.model.link(where).href()).query(true);
         this.model.fetch({data: data});
@@ -52,7 +42,4 @@ var AdView = Backbone.View.extend({
     }
 });
 
-module.exports = {
-    View: View,
-    AdView: AdView
-};
+module.exports = View;

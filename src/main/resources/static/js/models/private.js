@@ -2,11 +2,11 @@ var Backbone = require("backbone");
     require("backbone-relational");
     require("backbone-relational-hal");
 
-var rootUri = "/",
-    prefix = "currency-black-market:",
+var config = require("../config.js"),
+    rootUri = config.rootUri,
+    prefix = config.prefix,
     JsonHalAdapter = require("traverson-hal"),
     traverson = require("traverson");
-
 
 traverson.registerMediaType(JsonHalAdapter.mediaType,
     JsonHalAdapter);
@@ -51,6 +51,4 @@ var AdsModel = Backbone.RelationalHalResource.extend({
     }
 });
 
-module.exports = {
-    AdsModel: AdsModel
-};
+module.exports = AdsModel;

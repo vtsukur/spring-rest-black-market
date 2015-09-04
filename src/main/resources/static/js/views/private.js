@@ -48,7 +48,9 @@ var api = traverson.from(rootUri);
             this.form.createNew();
         },
         events: {
-            "click #createNew": this.createNew
+            "click #createNew": function () {
+                this.createNew();
+            }
         }
     });
 
@@ -168,6 +170,7 @@ var api = traverson.from(rootUri);
             this.model.set(this.model.defaults);
             this.$el.find(".form-group.ctrl:not(.create)").addClass("hide");
             this.$el.find(".create").removeClass("hide");
+            this.disableFields(false);
         },
         updateState: function (model) {
             this.model.set(model);
@@ -182,13 +185,13 @@ var api = traverson.from(rootUri);
             //    this.disableFields(disable);
             //}.bind(this));
         },
-        hideButtons: function(operations) {
+        /*hideButtons: function(operations) {
             //Need to filter only items in array and disable others
             operations.forEach(function (operation) {
                 var button = this.$el.find("." + operation);
                 this.model.hasLink(prefix + operation) ? button.removeClass("hide") : button.addClass("hide");
             },bind(this));
-        },
+        },*/
         events: {
             "click .ctrl": function (e) {
                 e.preventDefault();
@@ -197,6 +200,4 @@ var api = traverson.from(rootUri);
         }
     });
 
-module.exports = {
-    View: View
-};
+module.exports = View;

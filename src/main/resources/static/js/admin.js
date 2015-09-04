@@ -1,16 +1,13 @@
-module.exports = function() {
-    var views = require("./views/private.js");
+var View = require("./views/private.js");
 
-    var AdsModel = require("./models/private.js").AdsModel;
-    var ad = new AdsModel();
+var AdsModel = require("./models/private.js");
 
-    var Controller = require("./controller.js");
+var Controller = require("./controller/controller.js");
 
-    var controller = new Controller();
+var controller = new Controller();
 
-    new views.View({
-        model: controller.resource,
-        adModel: ad,
-        controller: controller
-    }).render();
-};
+new View({
+    model: controller.resource,
+    adModel: new AdsModel(),
+    controller: controller
+}).render();

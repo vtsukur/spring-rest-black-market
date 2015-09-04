@@ -6,7 +6,8 @@ module.exports = function(grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON("package.json"),
         browserify: {
-            "main.js": ["js/app.js"],
+            "admin.js": ["js/admin.js"],
+            "index.js": ["js/index.js"],
             options: {
                 browserifyOptions: {
                     debug: true

@@ -1,15 +1,10 @@
-module.exports = function() {
-    var views = require("./views/public.js");
+var View = require("./views/public.js");
 
-    var AdsModel = require("./models/public.js").AdsModel;
-    var ad = new AdsModel();
+var AdsModel = require("./models/public.js");
 
-    var Controller = require("./controller.js");
+var Controller = require("./controller/controller.js");
 
-    var controller = new Controller();
-
-    new views.View({
-        model: ad,
-        controller: controller
-    }).render();
-};
+new View({
+    model: new AdsModel(),
+    controller: new Controller()
+}).render();

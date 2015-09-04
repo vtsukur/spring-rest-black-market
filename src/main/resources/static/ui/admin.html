@@ -3,8 +3,7 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>Черная админка</title>
-    <link rel="stylesheet" href="../js/libs/bootstrap/dist/css/bootstrap.min.css">
-    <!--<link rel="stylesheet" href="//bootswatch.com/lumen/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
 <style>
     tr.highlight td {
         background-color: #d3d3d3;
@@ -23,7 +22,6 @@
     <td><%= publishedAt %></td>
     <td><%= comment %></td>
 </script>
-
 <div class="container">
     <h1>Черная админка</h1>
     <p>
@@ -49,13 +47,13 @@
                 <tbody>
                 </tbody>
             </table>
-            <span id="status" class="label label-info" style="position: absolute;"></span>
+            <span id="status" class="label label-info"></span>
         </div>
         <div class="col-md-4">
             <form id="form" class ="form-horizontal"></form>
         </div>
     </div>
 </div>
-<script src="../main.js"></script>
+<script src="../admin.js"></script>
 </body>
 </html>
