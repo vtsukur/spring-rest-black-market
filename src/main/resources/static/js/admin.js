@@ -1,13 +1,13 @@
 var View = require("./views/private.js");
 
-var AdsModel = require("./models/private.js");
+var models = require("./models/private.js"),
+    AdsModel = models.AdsModel,
+    ViewModel = models.ViewModel;
 
-var Controller = require("./controller/controller.js");
-
-var controller = new Controller();
+var controller = require("./controller/controller.js");
 
 new View({
-    model: controller.resource,
+    model: new ViewModel(),
     adModel: new AdsModel(),
     controller: controller
 }).render();

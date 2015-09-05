@@ -1,18 +1,9 @@
 var $ = require("jquery"),
-        _ = require("underscore"),
-        Backbone = require("backbone"),
-        Backform = require("backform");
-
-var rootUri = "/",
-    prefix = "currency-black-market:",
-    JsonHalAdapter = require("traverson-hal"),
-    traverson = require("traverson");
-
-traverson.registerMediaType(JsonHalAdapter.mediaType,
-    JsonHalAdapter);
-
-var api = traverson.from(rootUri);
-var resource = require("../controller/resource.js");
+    _ = require("underscore"),
+    Backbone = require("backbone"),
+    Backform = require("backform"),
+    prefix = require("../config.js").prefix,
+    resource = require("../controller/resource.js");
 
     var View = Backbone.View.extend({
         el: $(".container"),
@@ -22,13 +13,24 @@ var resource = require("../controller/resource.js");
             this.model.bind("sync", function () {
                 self.render(this.embedded(prefix + "ads"));
                 self.createNew();
+                self.updateStatus()
             });
             this.form = new FormView({
+                vm: this.model,
                 model: options.adModel,
                 controller: options.controller
             });
         },
         status: $("#status"),
+        updateStatus: function () {
+            var status = this.model.get("status");
+            if (status) {
+                this.status.text("Ваша заявка успешно " + status);
+                setTimeout(function () {
+                    this.status.text("");
+                }.bind(this), 2000);
+            }
+        },
         render: function (models) {
             var self = this,
                 $tbody = this.$("#ads-list tbody");
@@ -72,6 +74,7 @@ var resource = require("../controller/resource.js");
     var FormView = Backform.Form.extend({
         initialize: function (options) {
             var arg = arguments;
+            this.vm = options.vm;
             this.controller = options.controller;
 
             var fields = [{
@@ -165,7 +168,7 @@ var resource = require("../controller/resource.js");
         events: {
             "click .ctrl": function (e) {
                 e.preventDefault();
-                this.controller.makeAction(e.target.name.split(" ")[0], this.model);
+                this.controller.makeAction(e.target.name.split(" ")[0], this.model, this.vm);
             }
         }
     });

@@ -1,7 +1,7 @@
 var $ = require("jquery"),
     _ = require("underscore"),
     prefix = require("../config.js").prefix,
-    URI = require('URIjs');
+    URI = require("URIjs");
     Backbone = require("backbone");
 
 var View = Backbone.View.extend({
@@ -17,8 +17,8 @@ var View = Backbone.View.extend({
         _.each(this.model.embedded(prefix + "ads"), function (data) {
             $tbody.append(new AdView({model: data}).render().el);
         }, this);
-        this.$("#next").prop('disabled', !this.model.link("next"));
-        this.$("#prev").prop('disabled', !this.model.link("prev"));
+        this.$("#next").prop("disabled", !this.model.link("next"));
+        this.$("#prev").prop("disabled", !this.model.link("prev"));
     },
     events: {
         "click .navigation": function(e) {

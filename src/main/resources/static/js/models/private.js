@@ -6,20 +6,19 @@ var Backbone = require("backbone"),
 var config = require("../config.js"),
     rootUri = config.rootUri,
     prefix = config.prefix,
-    JsonHalAdapter = require("traverson-hal"),
-    traverson = require("traverson");
-
-traverson.registerMediaType(JsonHalAdapter.mediaType,
-    JsonHalAdapter);
-
-var api = traverson.from(rootUri);
-var resource = require("../controller/resource.js");
+    resource = require("../controller/resource.js");
 
 var AdsModel = Backbone.RelationalHalResource.extend({
     initialize: function () {
         resource.getRootHal(function (halUrl) {
             this.halUrl = halUrl;
-            $.extend(this.defaults, { _links: { self: { href: halUrl }}});
+            $.extend(this.defaults, {
+                _links: {
+                    self: {
+                        href: halUrl
+                    }
+                }
+            });
         }.bind(this));
         resource.getCurrentUser(function (user) {
             this.set("user", user);
@@ -40,4 +39,16 @@ var AdsModel = Backbone.RelationalHalResource.extend({
     }
 });
 
-module.exports = AdsModel;
+var ViewModel = Backbone.RelationalHalResource.extend({
+    initialize: function() {
+        resource.getMyUri(function (uri) {
+            this.url = uri;
+            this.fetch();
+        }.bind(this));
+    }
+});
+
+module.exports = {
+    AdsModel: AdsModel,
+    ViewModel: ViewModel
+};
