@@ -1,6 +1,3 @@
-/**
- * Created by my8bit on 8/4/15.
- */
 var Backbone = require("backbone");
 require("backbone-relational");
 require("backbone-relational-hal");
@@ -15,35 +12,15 @@ traverson.registerMediaType(JsonHalAdapter.mediaType,
     JsonHalAdapter);
 
 var api = traverson.from(rootUri);
+var resource = require("../controller/resource.js");
 
 var AdsModel = Backbone.RelationalHalResource.extend({
     initialize: function () {
-        var self = this;
-        api.jsonHal()
-            .follow(prefix + "ads")
-            .getUri(function (err, uri) {
-                if (err) {
-                    console.log(err);
-                    return;
-                }
-                self.halUrl = uri;
-                self.fetch();
-            });
-    },
-    defaults: {
-        location: {
-            city: null,
-            area: null
-        },
-        amount: null,
-        type: "SELL",
-        publishedAt: null,
-        rate: null,
-        currency: "USD",
-        comment: null,
-        phoneNumber: null
+        resource.getRootHal(function (halUrl) {
+            this.halUrl = halUrl;
+            this.fetch();
+        }.bind(this));
     }
 });
-
 
 module.exports = AdsModel;

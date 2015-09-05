@@ -12,6 +12,7 @@ traverson.registerMediaType(JsonHalAdapter.mediaType,
     JsonHalAdapter);
 
 var api = traverson.from(rootUri);
+var resource = require("../controller/resource.js");
 
     var View = Backbone.View.extend({
         el: $(".container"),
@@ -70,6 +71,7 @@ var api = traverson.from(rootUri);
 
     var FormView = Backform.Form.extend({
         initialize: function (options) {
+            var arg = arguments;
             this.controller = options.controller;
 
             var fields = [{
@@ -122,45 +124,13 @@ var api = traverson.from(rootUri);
                     name: "publish ctrl hide",
                     control: "button",
                     label: "Опубликовать"
-                }],
-                arg = arguments,
-                self = this;
+                }];
 
-            api.jsonHal()
-                .follow("profile")
-                .getResource(function (err, res) {
-                    if (err) {
-                        console.log(err);
-                        return;
-                    }
-                    var descriptors = res.descriptors,
-                        getField = function (filedName) {
-                            return fields.filter(function (el) {
-                                return el.name === filedName;
-                            })[0];
-                        };
-                    descriptors.forEach(function (el) {
-                        $.ajax({
-                            url: el.href
-                        }).done(function (res) {
-                            $.each(res.descriptors, function (key, value) {
-                                if (value.id === "ad-representation") {
-                                    $.each(value.descriptors, function (key, value) {
-                                        if (value.name === "currency" || value.name === "type") {
-                                            getField(value.name).options = value.doc.value.split(",").map(function (el) {
-                                                var value = el.trim();
-                                                return {label: value, value: value};
-                                            });
-                                        }
-                                    });
-                                    self.fields = fields;
-                                    Backform.Form.prototype.initialize.apply(self, arg);
-                                    self.render();
-                                }
-                            });
-                        });
-                    });
-                });
+            resource.getFields(fields, function(fields) {
+                this.fields = fields;
+                Backform.Form.prototype.initialize.apply(this, arg);
+                this.render();
+            }.bind(this));
         },
         el: $("#form"),
         disableFields: function(status) {

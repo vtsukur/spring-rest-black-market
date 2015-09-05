@@ -1,4 +1,5 @@
-var Backbone = require("backbone");
+var Backbone = require("backbone"),
+    $ = require("jquery");
     require("backbone-relational");
     require("backbone-relational-hal");
 
@@ -12,29 +13,17 @@ traverson.registerMediaType(JsonHalAdapter.mediaType,
     JsonHalAdapter);
 
 var api = traverson.from(rootUri);
+var resource = require("../controller/resource.js");
 
 var AdsModel = Backbone.RelationalHalResource.extend({
     initialize: function () {
-        var self = this;
-        api.jsonHal()
-            .follow(prefix + "ads")
-            .getUri(function (err, uri) {
-                if (err) {
-                    console.log(err);
-                    return;
-                }
-                self.halUrl = uri;
-                $.extend(self.defaults, { _links: { self: { href: uri }}});
-            });
-        api.jsonHal()
-            .follow(prefix + "users", "search", prefix + "current-user")
-            .getResource(function (err, res) {
-                if (err) {
-                    console.log(err);
-                    return;
-                }
-                self.set("user", res._links.self.href);
-            });
+        resource.getRootHal(function (halUrl) {
+            this.halUrl = halUrl;
+            $.extend(this.defaults, { _links: { self: { href: halUrl }}});
+        }.bind(this));
+        resource.getCurrentUser(function (user) {
+            this.set("user", user);
+        }.bind(this));
     },
     defaults: {
         location: {
