@@ -24,6 +24,10 @@ module.exports = {
         form.model.hasLink(prefix + relation) ? ctrl.removeClass("hide") : ctrl.addClass("hide");
     },
 
+    getModelItems: function (model) {
+        return model.embedded(prefix + "ads");
+    },
+
     makeAction: function (action, model, vm) {
         var options = {},
             actions = {

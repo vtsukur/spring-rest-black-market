@@ -1,14 +1,12 @@
 var Backbone = require("backbone"),
-    $ = require("jquery");
-    require("backbone-relational");
-    require("backbone-relational-hal");
+    $ = require("jquery"),
+    resource = require("../../controller/resource.js"),
+    AdModel;
 
-var config = require("../config.js"),
-    rootUri = config.rootUri,
-    prefix = config.prefix,
-    resource = require("../controller/resource.js");
+require("backbone-relational");
+require("backbone-relational-hal");
 
-var AdsModel = Backbone.RelationalHalResource.extend({
+AdModel = Backbone.RelationalHalResource.extend({
     initialize: function () {
         resource.getRootHal(function (halUrl) {
             this.halUrl = halUrl;
@@ -39,16 +37,4 @@ var AdsModel = Backbone.RelationalHalResource.extend({
     }
 });
 
-var ViewModel = Backbone.RelationalHalResource.extend({
-    initialize: function() {
-        resource.getMyUri(function (uri) {
-            this.url = uri;
-            this.fetch();
-        }.bind(this));
-    }
-});
-
-module.exports = {
-    AdsModel: AdsModel,
-    ViewModel: ViewModel
-};
+module.exports = AdModel;

@@ -83,8 +83,6 @@ module.exports = {
                     return;
                 }
                 callback(uri);
-            //    this.url = uri;
-            //    this.fetch();
             });
     }
 };

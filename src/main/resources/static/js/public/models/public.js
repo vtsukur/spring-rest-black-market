@@ -12,7 +12,7 @@ traverson.registerMediaType(JsonHalAdapter.mediaType,
     JsonHalAdapter);
 
 var api = traverson.from(rootUri);
-var resource = require("../controller/resource.js");
+var resource = require("../../controller/resource.js");
 
 var AdsModel = Backbone.RelationalHalResource.extend({
     initialize: function () {
