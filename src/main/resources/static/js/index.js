@@ -1,10 +1,8 @@
-var MainView = require("./public/views/public.js");
-
-var AdsModel = require("./public/models/public.js");
-
-var controller = require("./controller/controller.js");
+var MainView = require("./public/views/MainView.js"),
+    AdModel = require("./public/models/AdModel.js"),
+    controller = require("./controller/controller.js");
 
 new MainView({
-    model: new AdsModel(),
+    model: new AdModel(),
     controller: controller
 }).render();

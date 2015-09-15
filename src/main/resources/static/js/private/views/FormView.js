@@ -1,5 +1,4 @@
 var $ = require("jquery"),
-    _ = require("underscore"),
     Backbone = require("backbone"),
     Backform = require("backform"),
     resource = require("../../controller/resource.js"),
@@ -82,23 +81,25 @@ FormView = Backform.Form.extend({
     updateState: function (model) {
         this.model.set(model);
         this.model.set("_links", model._links);
-        this.controller.getOperations(model, this);
-        //this.controller.getOperations2(this.model, function(status, expire) {
-        //    var disable = true;
-        //    if (status.length && !expire) {
-        //        disable = false;
-        //        this.hideButtons(status);
-        //    }
-        //    this.disableFields(disable);
-        //}.bind(this));
+        this.controller.getOperations(this.model, function(status, expire) {
+            var disable = true;
+            if (status.length && !expire) {
+                disable = false;
+            }
+            this.hideButtons(status);
+            this.disableFields(disable);
+        }.bind(this));
     },
-    /*hideButtons: function(operations) {
-     //Need to filter only items in array and disable others
-     operations.forEach(function (operation) {
-     var button = this.$el.find("." + operation);
-     this.model.hasLink(prefix + operation) ? button.removeClass("hide") : button.addClass("hide");
-     },bind(this));
-     },*/
+    hideButtons: function(operations) {
+        this.$el.find(".ctrl").addClass("hide");
+        operations.forEach(function (operation) {
+            var button = this.$el.find("." + operation),
+                link = this.controller.getOperationLink(operation);
+            if (this.model.hasLink(link)) {
+                button.removeClass("hide")
+            }
+        }.bind(this));
+    },
     events: {
         "click .ctrl": function (e) {
             e.preventDefault();

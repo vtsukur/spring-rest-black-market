@@ -1,22 +1,20 @@
-var prefix = require("../config.js").prefix;
+var prefix = require("../config.js").prefix,
+    URI = require("URIjs");
 
 module.exports = {
 
-    getOperations: function (model, form) {
-        var allOperations = ["update", "create", "publish", "delete", "expire"],
-            fields = form.$el.find(".form-control:not(.ctrl)");
-
-
-        fields.attr("disabled", !allOperations.filter(function(operation) {
-                this.initOperation(model, operation, form);
-                return form.model.hasLink(prefix + operation);
-            }.bind(this)).length || form.model.hasLink(prefix + "expire"));
-    },
-
-    getOperations2: function (model, callback) {
+    getOperations: function (model, callback) {
         callback(["update", "create", "publish", "delete", "expire"].filter(function(operation) {
             return model.hasLink(prefix + operation);
         }), model.hasLink(prefix + "expire"));
+    },
+
+    getOperationLink: function (operation) {
+        return prefix + operation;
+    },
+
+    getLinkToGo: function (href) {
+        return URI(href).query(true);
     },
 
     initOperation: function (model, relation, form) {
