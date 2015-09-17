@@ -5,10 +5,10 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "bower": "*",
     "browserify": "^10.2.6",
     "browserify-shim": "^3.8.9",
     "grunt": "^0.4.5",
+    "grunt-cli": "^0.1.13",
     "grunt-browserify": "^3.8.0",
     "grunt-contrib-watch": "^0.6.1"
   },
@@ -51,5 +51,8 @@
     "traverson-hal": "^2.0.0",
     "underscore": "^1.8.3",
     "uri-templates": "^0.1.5"
+  },
+  "scripts": {
+    "postinstall": "node node_modules/grunt-cli/bin/grunt"
   }
 }

@@ -19,11 +19,17 @@ var MainView = Backbone.View.extend({
             this.updateStatus();
         }.bind(this));
         var FormView = require("./FormView.js"),
-            AdModel = require("../models/AdModel.js");
+            AdModel = require("../models/AdModel.js"),
+            self = this;
         this.form = new FormView({
-            vm: this.model,
             model: new AdModel(),
-            controller: options.controller
+            events: {
+                "click .ctrl": function (e) {
+                    e.preventDefault();
+                    var form = this;
+                    controller.makeAction(e.target.name.split(" ")[0], form.model, self.model);
+                }
+            }
         });
     },
     updateStatus: function () {

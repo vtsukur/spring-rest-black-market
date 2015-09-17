@@ -7,7 +7,6 @@ var $ = require("jquery"),
 FormView = Backform.Form.extend({
     initialize: function (options) {
         var args = arguments;
-        this.vm = options.vm;
         this.controller = options.controller;
 
         var fields = [{
@@ -99,12 +98,6 @@ FormView = Backform.Form.extend({
                 button.removeClass("hide")
             }
         }.bind(this));
-    },
-    events: {
-        "click .ctrl": function (e) {
-            e.preventDefault();
-            this.controller.makeAction(e.target.name.split(" ")[0], this.model, this.vm);
-        }
     }
 });
 
