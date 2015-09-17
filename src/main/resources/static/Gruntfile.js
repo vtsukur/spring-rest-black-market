@@ -6,18 +6,15 @@ module.exports = function(grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON("package.json"),
         browserify: {
-            "main.js": ["js/admin.js"],
-            options: {
-                browserifyOptions: {
-                    debug: true
-                }
-            }
+            "admin.js": ["js/admin.js"],
+            "index.js": ["js/index.js"]
         },
         watch: {
-            files: ["js/**/*.js"],
+            files: ["js/**/*.js", "!**/node_modules/**"],
             tasks: ["browserify"]
         }
     });
     grunt.loadNpmTasks("grunt-contrib-watch");
     grunt.loadNpmTasks("grunt-browserify");
+    grunt.registerTask("default", ["browserify"]);
 };

@@ -5,10 +5,10 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "bower": "*",
     "browserify": "^10.2.6",
     "browserify-shim": "^3.8.9",
     "grunt": "^0.4.5",
+    "grunt-cli": "^0.1.13",
     "grunt-browserify": "^3.8.0",
     "grunt-contrib-watch": "^0.6.1"
   },
@@ -26,28 +26,33 @@
       "exports": "Backform",
       "depends": [
         "backbone:Backbone",
-        "underscore:_"
+        "underscore:_",
+        "jquery:$"
       ]
     },
     "backbone-relational-hal": {
       "depends": [
         "backbone:Backbone",
         "underscore:_",
-        "uri-template:UriTemplate",
+        "uri-templates:UriTemplate",
         "jquery:$"
       ]
     }
   },
   "dependencies": {
+    "URIjs": "^1.16.0",
     "backbone": "^1.2.1",
     "backbone-relational": "^0.10.0-beta.0",
     "backbone-relational-hal": "^0.1.3",
-    "backform": "^0.1.0",
+    "backform": "~0.2.0",
     "bootstrap": "^3.3.5",
     "jquery": "^2.1.4",
     "traverson": "^2.0.1",
     "traverson-hal": "^2.0.0",
     "underscore": "^1.8.3",
-    "uri-template": "^1.0.0"
+    "uri-templates": "^0.1.5"
+  },
+  "scripts": {
+    "postinstall": "node node_modules/grunt-cli/bin/grunt"
   }
 }
