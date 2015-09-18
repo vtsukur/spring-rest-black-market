@@ -23,6 +23,7 @@ var MainView = Backbone.View.extend({
             self = this;
         this.form = new FormView({
             model: new AdModel(),
+            controller: controller,
             events: {
                 "click .ctrl": function (e) {
                     e.preventDefault();
