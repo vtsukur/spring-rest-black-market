@@ -13,7 +13,7 @@ plugins {
 }
 
 ext {
-  springSecurityVersion = "4.0.1.RELEASE"
+  springSecurityVersion = "4.0.2.RELEASE"
   generatedDocumentation = file('build/generated-snippets')
 }
 
@@ -53,7 +53,7 @@ dependencies {
 
   // Spring Data REST.
   compile("org.springframework.boot:spring-boot-starter-data-rest")
-  compile("org.springframework.data:spring-data-rest-webmvc:2.3.0.RELEASE")
+  compile("org.springframework.data:spring-data-rest-webmvc:2.4.0.RELEASE")
 
   // Spring Security.
   compile("org.springframework.boot:spring-boot-starter-security")
