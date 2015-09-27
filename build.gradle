@@ -3,8 +3,8 @@ buildscript {
     mavenCentral()
   }
   dependencies {
-    classpath("org.springframework.boot:spring-boot-gradle-plugin:1.2.4.RELEASE")
-    classpath("io.spring.gradle:dependency-management-plugin:0.5.0.RELEASE")
+    classpath("org.springframework.boot:spring-boot-gradle-plugin:1.2.6.RELEASE")
+    classpath("io.spring.gradle:dependency-management-plugin:0.5.3.RELEASE")
   }
 }
 
@@ -83,5 +83,5 @@ asciidoctor {
 }
 
 task wrapper(type: Wrapper) {
-  gradleVersion = "2.4"
+  gradleVersion = "2.7"
 }
