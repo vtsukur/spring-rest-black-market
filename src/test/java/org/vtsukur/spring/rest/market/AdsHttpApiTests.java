@@ -97,7 +97,7 @@ public class AdsHttpApiTests {
         ad.setAmount(BigInteger.valueOf(9999));
         ad.setCurrency(Ad.Currency.USD);
         ad.setRate(BigDecimal.valueOf(21.5));
-        ad.setLocation(new Ad.Location("Lviv", "Airport"));
+        ad.setLocation(new Ad.Location("Kharkiv", "Moskovskiy"));
         ad.setComment("need it now!");
         ad.setUser(referenceUser);
         return ad;
