@@ -47,3 +47,7 @@ To get all client side dependencies just run [npm](https://www.npmjs.com)
 
     npm install
 
+#### AdBlock issue
+
+If you have the errors like ```GET http://localhost:8080/ads/search net::ERR_BLOCKED_BY_CLIENT``` please add this url
+into AdBlock exception (white list). This happens because AdBlock automatically blocks url that contains the word *ads*
