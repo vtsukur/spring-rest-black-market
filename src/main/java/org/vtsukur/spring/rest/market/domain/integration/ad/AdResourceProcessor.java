@@ -1,7 +1,7 @@
 package org.vtsukur.spring.rest.market.domain.integration.ad;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.EntityLinks;
+import org.springframework.data.rest.webmvc.support.RepositoryEntityLinks;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.ResourceProcessor;
 import org.springframework.security.core.Authentication;
@@ -21,7 +21,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 public class AdResourceProcessor implements ResourceProcessor<Resource<AdExcerpt>> {
 
     @Autowired
-    private EntityLinks entityLinks;
+    private RepositoryEntityLinks entityLinks;
 
     @Override
     public Resource<AdExcerpt> process(Resource<AdExcerpt> resource) {
