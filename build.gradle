@@ -60,7 +60,7 @@ dependencies {
   testCompile("org.springframework.boot:spring-boot-starter-test")
   testCompile("junit:junit:4.12")
   testCompile("com.jayway.jsonpath:json-path:2.0.0")
-  testCompile("org.springframework.restdocs:spring-restdocs:1.0.0.BUILD-SNAPSHOT")
+  testCompile("org.springframework.restdocs:spring-restdocs-mockmvc:1.0.0.RELEASE")
 }
 
 test {
