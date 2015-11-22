@@ -1,7 +1,7 @@
 package org.vtsukur.spring.rest.market;
 
 import com.fasterxml.jackson.databind.Module;
-import com.fasterxml.jackson.datatype.jsr310.JSR310Module;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
@@ -51,7 +51,7 @@ public class ApplicationConfiguration extends WebSecurityConfigurerAdapter {
             99
     };
 
-    private static final String[] KYIV_DISTRICTS = new String[] {
+    private static final String[] DISTRICTS = new String[] {
             "Голосеево",
             "Дарница",
             "Деснянский",
@@ -62,15 +62,6 @@ public class ApplicationConfiguration extends WebSecurityConfigurerAdapter {
             "Святошино",
             "Соломенский",
             "Шевченковский"
-    };
-
-    private static final String[] LVIV_DISTRICTS = new String[] {
-            "Шевченківський",
-            "Личаківський",
-            "Сихівський",
-            "Франківський",
-            "Залізничний",
-            "Личаківський"
     };
 
     private static final String[] COMMENTS = new String[] {
@@ -238,7 +229,7 @@ public class ApplicationConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     private static String nextDistrict() {
-        return nextRandomFromArray(LVIV_DISTRICTS);
+        return nextRandomFromArray(DISTRICTS);
     }
 
     private static String nextComments() {
@@ -268,8 +259,8 @@ public class ApplicationConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public Module newJSR310Module() {
-        return new JSR310Module();
+    public Module newJavaTimeModule() {
+        return new JavaTimeModule();
     }
 
     @Configuration
