@@ -13,7 +13,7 @@ plugins {
 }
 
 ext {
-  generatedDocumentation = file('build/generated-snippets')
+  snippetsDir = file('build/generated-snippets')
 }
 
 apply plugin: "idea"
@@ -64,17 +64,13 @@ dependencies {
 }
 
 test {
-  systemProperty 'org.springframework.restdocs.outputDir', generatedDocumentation
-  outputs.dir generatedDocumentation
+  outputs.dir snippetsDir
 }
 
 asciidoctor {
-  attributes 'generated': generatedDocumentation
-  inputs.dir generatedDocumentation
+  attributes 'snippets': snippetsDir
+  inputs.dir snippetsDir
   dependsOn test
-  onlyIf {
-    project.hasProperty("genDoc")
-  }
 }
 
 task wrapper(type: Wrapper) {

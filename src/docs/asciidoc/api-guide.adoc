@@ -86,12 +86,12 @@ A `POST` request is used to create an ad
 
 ==== Example curl request
 
-include::{generated}/create-ad/curl-request.adoc[]
+include::{snippets}/create-ad/curl-request.adoc[]
 
 ==== Example HTTP request
 
-include::{generated}/create-ad/http-request.adoc[]
+include::{snippets}/create-ad/http-request.adoc[]
 
 ==== Example response
 
-include::{generated}/create-ad/http-response.adoc[]
+include::{snippets}/create-ad/http-response.adoc[]
