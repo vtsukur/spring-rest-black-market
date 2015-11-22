@@ -46,6 +46,7 @@ dependencies {
 
   // Spring Data REST.
   compile("org.springframework.boot:spring-boot-starter-data-rest")
+  compile("org.springframework.data:spring-data-rest-hal-browser")
 
   // Spring Security.
   compile("org.springframework.boot:spring-boot-starter-security")
