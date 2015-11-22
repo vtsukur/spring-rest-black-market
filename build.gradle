@@ -13,7 +13,6 @@ plugins {
 }
 
 ext {
-  springSecurityVersion = "4.0.2.RELEASE"
   generatedDocumentation = file('build/generated-snippets')
 }
 
@@ -55,9 +54,7 @@ dependencies {
 
   // Spring Security.
   compile("org.springframework.boot:spring-boot-starter-security")
-  compile("org.springframework.security:spring-security-data:$springSecurityVersion")
-  compile("org.springframework.security:spring-security-web:$springSecurityVersion")
-  compile("org.springframework.security:spring-security-config:$springSecurityVersion")
+  compile("org.springframework.security:spring-security-data")
 
   // Initial test dependencies.
   testCompile("org.springframework.boot:spring-boot-starter-test")
