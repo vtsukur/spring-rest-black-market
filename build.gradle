@@ -29,11 +29,6 @@ jar {
   }
 }
 
-copy {
-  from "etc/hack/java"
-  into "src/main/java"
-}
-
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
