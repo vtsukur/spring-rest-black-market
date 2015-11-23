@@ -11,7 +11,7 @@ import org.springframework.data.rest.core.annotation.RestResource;
 /**
  * @author volodymyr.tsukur
  */
-@RepositoryRestResource(excerptProjection = AdExcerpt.class)
+@RepositoryRestResource(excerptProjection = StandardAdProjection.class)
 public interface AdRepository extends PagingAndSortingRepository<Ad, Long> {
 
     @RestResource(rel = "published", path = "published")

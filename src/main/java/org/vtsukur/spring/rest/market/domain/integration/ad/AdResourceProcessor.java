@@ -8,7 +8,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.vtsukur.spring.rest.market.domain.core.ad.Ad;
-import org.vtsukur.spring.rest.market.domain.core.ad.AdExcerpt;
+import org.vtsukur.spring.rest.market.domain.core.ad.StandardAdProjection;
 import org.vtsukur.spring.rest.market.infrastructure.CustomUserDetailsService;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
@@ -18,14 +18,14 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
  * @author volodymyr.tsukur
  */
 @Component
-public class AdResourceProcessor implements ResourceProcessor<Resource<AdExcerpt>> {
+public class AdResourceProcessor implements ResourceProcessor<Resource<StandardAdProjection>> {
 
     @Autowired
     private RepositoryEntityLinks entityLinks;
 
     @Override
-    public Resource<AdExcerpt> process(Resource<AdExcerpt> resource) {
-        AdExcerpt ad = resource.getContent();
+    public Resource<StandardAdProjection> process(Resource<StandardAdProjection> resource) {
+        StandardAdProjection ad = resource.getContent();
         if (hasAccessToModify(ad)) {
             Ad.Status status = ad.getStatus();
             if (status == Ad.Status.NEW) {
@@ -40,7 +40,7 @@ public class AdResourceProcessor implements ResourceProcessor<Resource<AdExcerpt
         return resource;
     }
 
-    private static boolean hasAccessToModify(AdExcerpt ad) {
+    private static boolean hasAccessToModify(StandardAdProjection ad) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth == null) {
             return false;

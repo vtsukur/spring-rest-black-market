@@ -11,8 +11,8 @@ import java.time.LocalDateTime;
 /**
  * @author volodymyr.tsukur
  */
-@Projection(name = "custom", types = Ad.class)
-public interface AdExcerpt {
+@Projection(name = "standard", types = Ad.class)
+public interface StandardAdProjection {
 
     @JsonIgnore
     Long getId();
