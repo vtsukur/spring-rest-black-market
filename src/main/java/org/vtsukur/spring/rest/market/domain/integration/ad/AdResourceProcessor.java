@@ -8,7 +8,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.vtsukur.spring.rest.market.domain.core.ad.Ad;
-import org.vtsukur.spring.rest.market.domain.core.ad.StandardAdProjection;
+import org.vtsukur.spring.rest.market.domain.integration.ad.projections.StandardAdProjection;
 import org.vtsukur.spring.rest.market.infrastructure.CustomUserDetailsService;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;

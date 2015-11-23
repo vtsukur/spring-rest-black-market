@@ -1,8 +1,9 @@
-package org.vtsukur.spring.rest.market.domain.core.ad;
+package org.vtsukur.spring.rest.market.domain.integration.ad.projections;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.rest.core.config.Projection;
+import org.vtsukur.spring.rest.market.domain.core.ad.Ad;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;

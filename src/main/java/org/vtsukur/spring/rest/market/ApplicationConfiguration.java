@@ -21,6 +21,8 @@ import org.vtsukur.spring.rest.market.domain.core.ad.Ad;
 import org.vtsukur.spring.rest.market.domain.core.ad.AdRepository;
 import org.vtsukur.spring.rest.market.domain.core.user.User;
 import org.vtsukur.spring.rest.market.domain.core.user.UserRepository;
+import org.vtsukur.spring.rest.market.domain.integration.ad.projections.MinimalAdProjection;
+import org.vtsukur.spring.rest.market.domain.integration.ad.projections.StandardAdProjection;
 import org.vtsukur.spring.rest.market.infrastructure.CustomUserDetailsService;
 import org.vtsukur.spring.rest.market.infrastructure.SecurityUtils;
 
@@ -269,6 +271,8 @@ public class ApplicationConfiguration extends WebSecurityConfigurerAdapter {
         @Override
         public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config) {
             config.exposeIdsFor(Ad.class);
+            config.getProjectionConfiguration().addProjection(MinimalAdProjection.class);
+            config.getProjectionConfiguration().addProjection(StandardAdProjection.class);
         }
 
         @Bean
