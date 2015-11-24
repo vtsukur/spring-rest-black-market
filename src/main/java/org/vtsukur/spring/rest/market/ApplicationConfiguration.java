@@ -7,6 +7,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
+import org.springframework.data.rest.core.event.ValidatingRepositoryEventListener;
 import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurerAdapter;
 import org.springframework.hateoas.UriTemplate;
 import org.springframework.hateoas.hal.CurieProvider;
@@ -19,6 +20,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.data.repository.query.SecurityEvaluationContextExtension;
 import org.vtsukur.spring.rest.market.domain.core.ad.Ad;
 import org.vtsukur.spring.rest.market.domain.core.ad.AdRepository;
+import org.vtsukur.spring.rest.market.domain.core.ad.AdValidator;
 import org.vtsukur.spring.rest.market.domain.core.user.User;
 import org.vtsukur.spring.rest.market.domain.core.user.UserRepository;
 import org.vtsukur.spring.rest.market.domain.integration.ad.projections.MinimalAdProjection;
@@ -273,6 +275,11 @@ public class ApplicationConfiguration extends WebSecurityConfigurerAdapter {
             config.exposeIdsFor(Ad.class);
             config.getProjectionConfiguration().addProjection(MinimalAdProjection.class);
             config.getProjectionConfiguration().addProjection(StandardAdProjection.class);
+        }
+
+        @Override
+        public void configureValidatingRepositoryEventListener(ValidatingRepositoryEventListener validatingListener) {
+            validatingListener.addValidator("beforeCreate", new AdValidator());
         }
 
         @Bean
