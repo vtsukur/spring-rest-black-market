@@ -73,7 +73,7 @@ from resource to resource.
 [[resources]]
 = Resources
 
-[[resources-ads]]
+[[ads]]
 == Ads
 
 The Ads resource / 'ads' relation is used to create and list ads.

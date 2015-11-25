@@ -103,7 +103,8 @@ public class ApplicationConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.PATCH, "/ads/**").hasRole("USER")
                 .antMatchers(HttpMethod.DELETE, "/ads/**").hasRole("USER")
                 .and()
-                .csrf().disable();
+                .csrf().disable()
+                .headers().frameOptions().sameOrigin();
     }
 
     @Bean
@@ -284,7 +285,7 @@ public class ApplicationConfiguration extends WebSecurityConfigurerAdapter {
 
         @Bean
         public CurieProvider curieProvider() {
-            return new DefaultCurieProvider("currency-black-market", new UriTemplate("http://localhost:8080/alps/{rel}"));
+            return new DefaultCurieProvider("currency-black-market", new UriTemplate("http://localhost:8080/docs/api-guide.html#{rel}"));
         }
 
     }
