@@ -11,6 +11,7 @@ import org.springframework.hateoas.MediaTypes;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.RestDocumentation;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
@@ -29,8 +30,13 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import static org.hamcrest.Matchers.is;
+import static org.springframework.restdocs.hypermedia.HypermediaDocumentation.halLinks;
+import static org.springframework.restdocs.hypermedia.HypermediaDocumentation.linkWithRel;
+import static org.springframework.restdocs.hypermedia.HypermediaDocumentation.links;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
@@ -56,14 +62,18 @@ public class AdsHttpApiTests {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private UserDetailsService userDetailsService;
+
     private User referenceUser;
 
     @Before
     public void setup() {
         mockMvc = MockMvcBuilders
                 .webAppContextSetup(webApplicationContext)
+                .apply(springSecurity())
                 .apply(documentationConfiguration(restDocumentation))
-                .alwaysDo(document("{method-name}"))
+//                .alwaysDo(document("{method-name}"))
                 .build();
 
         referenceUser = userRepository.findByPhoneNumber(Admin.HONTAREVA);
@@ -78,9 +88,21 @@ public class AdsHttpApiTests {
                 .post("/ads")
                 .accept(MediaTypes.HAL_JSON)
                 .content(requestBody)
-                .contentType(MediaType.APPLICATION_JSON));
+                .contentType(MediaType.APPLICATION_JSON)
+                .with(user(userDetailsService.loadUserByUsername(Admin.HONTAREVA))));
 
         final Ad createdBooking = findCreatedBooking();
+
+        resultActions.andDo(document("create-ad", links(halLinks(),
+                linkWithRel("curies").description("CUR-ies"),
+                linkWithRel("self").description("This ad"),
+                linkWithRel("currency-black-market:ad").description("This <<ads, ad>>"),
+                linkWithRel("currency-black-market:user").description("Author of this ad"),
+                linkWithRel("currency-black-market:update").description("Updates this ad via PATCH"),
+                linkWithRel("currency-black-market:delete").description("Deletes this ad via DELETE"),
+                linkWithRel("currency-black-market:publish").description("Publishes this ad via POST with empty body")
+        )));
+
         resultActions.andExpect(status().isCreated())
                 .andExpect(header().string(HttpHeaders.LOCATION, "http://localhost:8080/ads/" + createdBooking.getId()))
                 .andExpect(jsonPath("$.type", is(ad.getType().name())))

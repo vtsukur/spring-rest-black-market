@@ -95,3 +95,7 @@ include::{snippets}/create-ad/http-request.adoc[]
 ==== Example response
 
 include::{snippets}/create-ad/http-response.adoc[]
+
+==== Links
+
+include::{snippets}/create-ad/links.adoc[]
