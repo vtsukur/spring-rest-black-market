@@ -99,3 +99,7 @@ include::{snippets}/create-ad/http-response.adoc[]
 ==== Links
 
 include::{snippets}/create-ad/links.adoc[]
+
+==== Response Fields
+
+include::{snippets}/create-ad/response-fields.adoc[]

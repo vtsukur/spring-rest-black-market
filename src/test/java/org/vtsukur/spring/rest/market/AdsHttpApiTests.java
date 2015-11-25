@@ -11,6 +11,7 @@ import org.springframework.hateoas.MediaTypes;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.RestDocumentation;
+import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -28,13 +29,15 @@ import org.vtsukur.spring.rest.market.infrastructure.Admin;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.hamcrest.Matchers.is;
-import static org.springframework.restdocs.hypermedia.HypermediaDocumentation.halLinks;
-import static org.springframework.restdocs.hypermedia.HypermediaDocumentation.linkWithRel;
-import static org.springframework.restdocs.hypermedia.HypermediaDocumentation.links;
+import static org.springframework.restdocs.hypermedia.HypermediaDocumentation.*;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
+import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
+import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -93,15 +96,31 @@ public class AdsHttpApiTests {
 
         final Ad createdBooking = findCreatedBooking();
 
-        resultActions.andDo(document("create-ad", links(halLinks(),
-                linkWithRel("curies").description("CUR-ies"),
-                linkWithRel("self").description("This ad"),
-                linkWithRel("currency-black-market:ad").description("This <<ads, ad>>"),
-                linkWithRel("currency-black-market:user").description("Author of this ad"),
-                linkWithRel("currency-black-market:update").description("Updates this ad via PATCH"),
-                linkWithRel("currency-black-market:delete").description("Deletes this ad via DELETE"),
-                linkWithRel("currency-black-market:publish").description("Publishes this ad via POST with empty body")
-        )));
+        resultActions.andDo(document("create-ad",
+                links(halLinks(),
+                        linkWithRel("curies").description("CUR-ies"),
+                        linkWithRel("self").description("This ad"),
+                        linkWithRel("currency-black-market:ad").description("This <<ads, ad>>"),
+                        linkWithRel("currency-black-market:user").description("Author of this ad"),
+                        linkWithRel("currency-black-market:update").description("Updates this ad via PATCH"),
+                        linkWithRel("currency-black-market:delete").description("Deletes this ad via DELETE"),
+                        linkWithRel("currency-black-market:publish").description("Publishes this ad via POST with empty body")
+                ),
+                responseFields(
+                        fieldWithPath("_links").type(JsonFieldType.OBJECT).description("Links"),
+                        fieldWithPath("id").type(JsonFieldType.STRING).description("Unique ad id"),
+                        fieldWithPath("type").type(JsonFieldType.STRING).description("Type of the ad, one of: " +
+                                Stream.of(Ad.Type.values()).map(Enum::name).collect(Collectors.joining(", "))),
+                        fieldWithPath("amount").type(JsonFieldType.NUMBER).description("Amount to buy or sell"),
+                        fieldWithPath("currency").type(JsonFieldType.STRING).description("Type of the currency"),
+                        fieldWithPath("rate").type(JsonFieldType.NUMBER).description("Suggested exchange rate"),
+                        fieldWithPath("location.city").type(JsonFieldType.STRING).description("City"),
+                        fieldWithPath("location.area").type(JsonFieldType.STRING).description("Area of the city to meet"),
+                        fieldWithPath("comment").type(JsonFieldType.STRING).description("Arbitrary comment"),
+                        fieldWithPath("publishedAt").type(JsonFieldType.STRING).description("Publishing time"),
+                        fieldWithPath("status").type(JsonFieldType.STRING).description("Formal ad status, one of " +
+                                Stream.of(Ad.Status.values()).map(Enum::name).collect(Collectors.joining(", ")))
+                )));
 
         resultActions.andExpect(status().isCreated())
                 .andExpect(header().string(HttpHeaders.LOCATION, "http://localhost:8080/ads/" + createdBooking.getId()))
