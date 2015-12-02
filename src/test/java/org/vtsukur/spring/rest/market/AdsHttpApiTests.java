@@ -95,6 +95,15 @@ public class AdsHttpApiTests {
                 .with(user(userDetailsService.loadUserByUsername(Admin.HONTAREVA))));
 
         final Ad createdBooking = findCreatedBooking();
+        resultActions.andExpect(status().isCreated())
+                .andExpect(header().string(HttpHeaders.LOCATION, "http://localhost:8080/ads/" + createdBooking.getId()))
+                .andExpect(jsonPath("$.type", is(ad.getType().name())))
+                .andExpect(jsonPath("$.amount", is(ad.getAmount().intValue())))
+                .andExpect(jsonPath("$.currency", is(ad.getCurrency().name())))
+                .andExpect(jsonPath("$.rate", is(ad.getRate().doubleValue())))
+                .andExpect(jsonPath("$.location.city", is(ad.getLocation().getCity())))
+                .andExpect(jsonPath("$.location.area", is(ad.getLocation().getArea())))
+                .andExpect(jsonPath("$.comment", is(ad.getComment())));
 
         resultActions.andDo(document("create-ad",
                 links(halLinks(),
@@ -121,16 +130,6 @@ public class AdsHttpApiTests {
                         fieldWithPath("status").type(JsonFieldType.STRING).description("Formal ad status, one of " +
                                 Stream.of(Ad.Status.values()).map(Enum::name).collect(Collectors.joining(", ")))
                 )));
-
-        resultActions.andExpect(status().isCreated())
-                .andExpect(header().string(HttpHeaders.LOCATION, "http://localhost:8080/ads/" + createdBooking.getId()))
-                .andExpect(jsonPath("$.type", is(ad.getType().name())))
-                .andExpect(jsonPath("$.amount", is(ad.getAmount().intValue())))
-                .andExpect(jsonPath("$.currency", is(ad.getCurrency().name())))
-                .andExpect(jsonPath("$.rate", is(ad.getRate().doubleValue())))
-                .andExpect(jsonPath("$.location.city", is(ad.getLocation().getCity())))
-                .andExpect(jsonPath("$.location.area", is(ad.getLocation().getArea())))
-                .andExpect(jsonPath("$.comment", is(ad.getComment())));
     }
 
     private Ad findCreatedBooking() {
