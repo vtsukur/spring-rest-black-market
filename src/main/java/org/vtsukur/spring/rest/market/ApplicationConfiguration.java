@@ -285,7 +285,7 @@ public class ApplicationConfiguration extends WebSecurityConfigurerAdapter {
 
         @Bean
         public CurieProvider curieProvider() {
-            return new DefaultCurieProvider("currency-black-market", new UriTemplate("http://localhost:8080/docs/api-guide.html#{rel}"));
+            return new DefaultCurieProvider("black-market", new UriTemplate("http://localhost:8080/docs/api-guide.html#{rel}"));
         }
 
     }
