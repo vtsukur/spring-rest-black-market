@@ -29,11 +29,11 @@ public class AdResourceProcessor implements ResourceProcessor<Resource<Ad>> {
             Ad.Status status = ad.getStatus();
             if (status == Ad.Status.NEW) {
                 resource.add(entityLinks.linkForSingleResource(Ad.class, ad.getId()).withRel("update"));
-                resource.add(entityLinks.linkForSingleResource(Ad.class, ad.getId()).withRel("delete"));
-                resource.add(linkTo(methodOn(AdResourceController.class).publish(ad.getId(), null)).withRel("publish"));
+                resource.add(entityLinks.linkForSingleResource(Ad.class, ad.getId()).withRel("deletion"));
+                resource.add(linkTo(methodOn(AdResourceController.class).publish(ad.getId(), null)).withRel("publishing"));
             }
             if (status == Ad.Status.PUBLISHED) {
-                resource.add(linkTo(methodOn(AdResourceController.class).expire(ad.getId(), null)).withRel("expire"));
+                resource.add(linkTo(methodOn(AdResourceController.class).expire(ad.getId(), null)).withRel("expiration"));
             }
         }
         return resource;

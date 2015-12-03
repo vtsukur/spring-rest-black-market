@@ -112,8 +112,8 @@ public class AdsHttpApiTests {
                         linkWithRel("currency-black-market:ad").description("This <<ads, ad>>"),
                         linkWithRel("currency-black-market:user").description("Author of this ad"),
                         linkWithRel("currency-black-market:update").description("Updates this ad via PATCH"),
-                        linkWithRel("currency-black-market:delete").description("Deletes this ad via DELETE"),
-                        linkWithRel("currency-black-market:publish").description("Publishes this ad via POST with empty body")
+                        linkWithRel("currency-black-market:deletion").description("Deletes this ad via DELETE"),
+                        linkWithRel("currency-black-market:publishing").description("Publishes this ad via POST with empty body")
                 ),
                 responseFields(
                         fieldWithPath("_links").type(JsonFieldType.OBJECT).description("Links"),
