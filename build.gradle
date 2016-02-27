@@ -58,7 +58,7 @@ dependencies {
 
   // Extras
   testCompile("com.jayway.jsonpath:json-path:2.0.0")
-  testCompile("org.springframework.restdocs:spring-restdocs-mockmvc:1.0.0.RELEASE")
+  testCompile("org.springframework.restdocs:spring-restdocs-mockmvc:1.0.1.RELEASE")
   testCompile("org.springframework.security:spring-security-test")
 }
 
