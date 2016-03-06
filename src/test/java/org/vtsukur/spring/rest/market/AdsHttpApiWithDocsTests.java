@@ -32,7 +32,9 @@ import java.math.BigInteger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.nullValue;
 import static org.springframework.restdocs.hypermedia.HypermediaDocumentation.*;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
@@ -97,13 +99,16 @@ public class AdsHttpApiWithDocsTests {
         final Ad createdBooking = findCreatedBooking();
         resultActions.andExpect(status().isCreated())
                 .andExpect(header().string(HttpHeaders.LOCATION, "http://localhost:8080/ads/" + createdBooking.getId()))
-                .andExpect(jsonPath("$.type", is(ad.getType().name())))
-                .andExpect(jsonPath("$.amount", is(ad.getAmount().intValue())))
-                .andExpect(jsonPath("$.currency", is(ad.getCurrency().name())))
-                .andExpect(jsonPath("$.rate", is(ad.getRate().doubleValue())))
-                .andExpect(jsonPath("$.location.city", is(ad.getLocation().getCity())))
-                .andExpect(jsonPath("$.location.area", is(ad.getLocation().getArea())))
-                .andExpect(jsonPath("$.comment", is(ad.getComment())));
+                .andExpect(jsonPath("$.id", is(createdBooking.getId().intValue())))
+                .andExpect(jsonPath("$.type", is(createdBooking.getType().name())))
+                .andExpect(jsonPath("$.amount", is(createdBooking.getAmount().intValue())))
+                .andExpect(jsonPath("$.currency", is(createdBooking.getCurrency().name())))
+                .andExpect(jsonPath("$.rate", is(createdBooking.getRate().doubleValue())))
+                .andExpect(jsonPath("$.location.city", is(createdBooking.getLocation().getCity())))
+                .andExpect(jsonPath("$.location.area", is(createdBooking.getLocation().getArea())))
+                .andExpect(jsonPath("$.comment", is(createdBooking.getComment())))
+                .andExpect(jsonPath("$.publishedAt", is(nullValue())))
+                .andExpect(jsonPath("$.status", is(createdBooking.getStatus().name())));
 
         resultActions.andDo(document("create-ad",
                 links(halLinks(),
@@ -147,13 +152,16 @@ public class AdsHttpApiWithDocsTests {
 
         final Ad publishedBooking = adRepository.findOne(ad.getId());
         resultActions.andExpect(status().is2xxSuccessful())
+                .andExpect(jsonPath("$.id", is(publishedBooking.getId().intValue())))
                 .andExpect(jsonPath("$.type", is(publishedBooking.getType().name())))
                 .andExpect(jsonPath("$.amount", is(publishedBooking.getAmount().intValue())))
                 .andExpect(jsonPath("$.currency", is(publishedBooking.getCurrency().name())))
                 .andExpect(jsonPath("$.rate", is(publishedBooking.getRate().doubleValue())))
                 .andExpect(jsonPath("$.location.city", is(publishedBooking.getLocation().getCity())))
                 .andExpect(jsonPath("$.location.area", is(publishedBooking.getLocation().getArea())))
-                .andExpect(jsonPath("$.comment", is(publishedBooking.getComment())));
+                .andExpect(jsonPath("$.comment", is(publishedBooking.getComment())))
+                .andExpect(jsonPath("$.publishedAt", is(not(nullValue()))))
+                .andExpect(jsonPath("$.status", is(publishedBooking.getStatus().name())));
 
         resultActions.andDo(document("publish-ad",
                 links(halLinks(),
