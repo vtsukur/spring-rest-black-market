@@ -103,3 +103,29 @@ include::{snippets}/create-ad/links.adoc[]
 ==== Response Fields
 
 include::{snippets}/create-ad/response-fields.adoc[]
+
+[[publishing]]
+=== Publishing an ad
+
+Publishing an ad makes it publicly available to all market visitors.
+Once ad is published, it cannot be deleted or updated
+
+==== Example curl request
+
+include::{snippets}/publish-ad/curl-request.adoc[]
+
+==== Example HTTP request
+
+include::{snippets}/publish-ad/http-request.adoc[]
+
+==== Example response
+
+include::{snippets}/publish-ad/http-response.adoc[]
+
+==== Links
+
+include::{snippets}/publish-ad/links.adoc[]
+
+==== Response Fields
+
+include::{snippets}/publish-ad/response-fields.adoc[]

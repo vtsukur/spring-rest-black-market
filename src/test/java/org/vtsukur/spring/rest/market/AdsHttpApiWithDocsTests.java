@@ -136,6 +136,50 @@ public class AdsHttpApiWithDocsTests {
         return adRepository.findAll(new Sort(Sort.Direction.DESC, "id")).iterator().next();
     }
 
+    @Test
+    public void publishAd() throws Exception {
+        final Ad ad = adRepository.save(ad());
+
+        ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders
+                .post("/ads/" + ad.getId() + "/publishing")
+                .accept(MediaTypes.HAL_JSON)
+                .with(user(userDetailsService.loadUserByUsername(Admin.HONTAREVA))));
+
+        final Ad publishedBooking = adRepository.findOne(ad.getId());
+        resultActions.andExpect(status().is2xxSuccessful())
+                .andExpect(jsonPath("$.type", is(publishedBooking.getType().name())))
+                .andExpect(jsonPath("$.amount", is(publishedBooking.getAmount().intValue())))
+                .andExpect(jsonPath("$.currency", is(publishedBooking.getCurrency().name())))
+                .andExpect(jsonPath("$.rate", is(publishedBooking.getRate().doubleValue())))
+                .andExpect(jsonPath("$.location.city", is(publishedBooking.getLocation().getCity())))
+                .andExpect(jsonPath("$.location.area", is(publishedBooking.getLocation().getArea())))
+                .andExpect(jsonPath("$.comment", is(publishedBooking.getComment())));
+
+        resultActions.andDo(document("publish-ad",
+                links(halLinks(),
+                        linkWithRel("curies").description("CUR-ies"),
+                        linkWithRel("self").description("This ad"),
+                        linkWithRel("black-market:ad").description("This <<ads, ad>>"),
+                        linkWithRel("black-market:user").description("Author of this ad"),
+                        linkWithRel("black-market:expiration").description("Expires this ad via POST")
+                ),
+                responseFields(
+                        fieldWithPath("_links").type(JsonFieldType.OBJECT).description("Links"),
+                        fieldWithPath("id").type(JsonFieldType.STRING).description("Unique ad id"),
+                        fieldWithPath("type").type(JsonFieldType.STRING).description("Type of the ad, one of: " +
+                                Stream.of(Ad.Type.values()).map(Enum::name).collect(Collectors.joining(", "))),
+                        fieldWithPath("amount").type(JsonFieldType.NUMBER).description("Amount to buy or sell"),
+                        fieldWithPath("currency").type(JsonFieldType.STRING).description("Type of the currency"),
+                        fieldWithPath("rate").type(JsonFieldType.NUMBER).description("Suggested exchange rate"),
+                        fieldWithPath("location.city").type(JsonFieldType.STRING).description("City"),
+                        fieldWithPath("location.area").type(JsonFieldType.STRING).description("Area of the city to meet"),
+                        fieldWithPath("comment").type(JsonFieldType.STRING).description("Arbitrary comment"),
+                        fieldWithPath("publishedAt").type(JsonFieldType.STRING).description("Publishing time"),
+                        fieldWithPath("status").type(JsonFieldType.STRING).description("Formal ad status, one of " +
+                                Stream.of(Ad.Status.values()).map(Enum::name).collect(Collectors.joining(", ")))
+                )));
+    }
+
     private Ad ad() {
         Ad ad = new Ad();
         ad.setType(Ad.Type.BUY);
