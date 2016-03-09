@@ -28,6 +28,10 @@ public class AdService {
         return adRepository.save(modifiedAd);
     }
 
+    public Ad findOne(Long id) {
+        return adRepository.findOne(id);
+    }
+
     @FunctionalInterface
     private interface Action {
 
