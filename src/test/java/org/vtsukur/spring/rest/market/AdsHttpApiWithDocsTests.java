@@ -1,26 +1,22 @@
 package org.vtsukur.spring.rest.market;
 
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Sort;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.restdocs.RestDocumentation;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.context.WebApplicationContext;
 import org.vtsukur.spring.rest.market.domain.core.ad.Ad;
 import org.vtsukur.spring.rest.market.domain.core.ad.AdRepository;
 import org.vtsukur.spring.rest.market.domain.core.user.User;
@@ -35,31 +31,28 @@ import java.util.stream.Stream;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
-import static org.springframework.restdocs.hypermedia.HypermediaDocumentation.*;
+import static org.springframework.restdocs.hypermedia.HypermediaDocumentation.halLinks;
+import static org.springframework.restdocs.hypermedia.HypermediaDocumentation.linkWithRel;
+import static org.springframework.restdocs.hypermedia.HypermediaDocumentation.links;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
-import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
-import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * @author volodymyr.tsukur
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = Application.class)
-@WebAppConfiguration
-@Transactional
+@RunWith(SpringRunner.class)
+@SpringBootTest
+@AutoConfigureMockMvc
+@AutoConfigureRestDocs("build/generated-snippets")
 public class AdsHttpApiWithDocsTests {
 
-    private MockMvc mockMvc;
-
-    @Rule
-    public final RestDocumentation restDocumentation = new RestDocumentation("build/generated-snippets");
-
     @Autowired
-    private WebApplicationContext webApplicationContext;
+    private MockMvc mockMvc;
 
     @Autowired
     private AdRepository adRepository;
@@ -74,13 +67,6 @@ public class AdsHttpApiWithDocsTests {
 
     @Before
     public void setup() {
-        mockMvc = MockMvcBuilders
-                .webAppContextSetup(webApplicationContext)
-                .apply(springSecurity())
-                .apply(documentationConfiguration(restDocumentation))
-//                .alwaysDo(document("{method-name}"))
-                .build();
-
         referenceUser = userRepository.findByPhoneNumber(Admin.HONTAREVA);
     }
 
@@ -122,7 +108,7 @@ public class AdsHttpApiWithDocsTests {
                 ),
                 responseFields(
                         fieldWithPath("_links").type(JsonFieldType.OBJECT).description("Links"),
-                        fieldWithPath("id").type(JsonFieldType.STRING).description("Unique ad id"),
+                        fieldWithPath("id").type(JsonFieldType.NUMBER).description("Unique ad id"),
                         fieldWithPath("type").type(JsonFieldType.STRING).description("Type of the ad, one of: " +
                                 Stream.of(Ad.Type.values()).map(Enum::name).collect(Collectors.joining(", "))),
                         fieldWithPath("amount").type(JsonFieldType.NUMBER).description("Amount to buy or sell"),
@@ -131,7 +117,7 @@ public class AdsHttpApiWithDocsTests {
                         fieldWithPath("location.city").type(JsonFieldType.STRING).description("City"),
                         fieldWithPath("location.area").type(JsonFieldType.STRING).description("Area of the city to meet"),
                         fieldWithPath("comment").type(JsonFieldType.STRING).description("Arbitrary comment"),
-                        fieldWithPath("publishedAt").type(JsonFieldType.STRING).description("Publishing time"),
+                        fieldWithPath("publishedAt").description("Publishing time"),
                         fieldWithPath("status").type(JsonFieldType.STRING).description("Formal ad status, one of " +
                                 Stream.of(Ad.Status.values()).map(Enum::name).collect(Collectors.joining(", ")))
                 )));
@@ -173,7 +159,7 @@ public class AdsHttpApiWithDocsTests {
                 ),
                 responseFields(
                         fieldWithPath("_links").type(JsonFieldType.OBJECT).description("Links"),
-                        fieldWithPath("id").type(JsonFieldType.STRING).description("Unique ad id"),
+                        fieldWithPath("id").type(JsonFieldType.NUMBER).description("Unique ad id"),
                         fieldWithPath("type").type(JsonFieldType.STRING).description("Type of the ad, one of: " +
                                 Stream.of(Ad.Type.values()).map(Enum::name).collect(Collectors.joining(", "))),
                         fieldWithPath("amount").type(JsonFieldType.NUMBER).description("Amount to buy or sell"),
@@ -182,7 +168,7 @@ public class AdsHttpApiWithDocsTests {
                         fieldWithPath("location.city").type(JsonFieldType.STRING).description("City"),
                         fieldWithPath("location.area").type(JsonFieldType.STRING).description("Area of the city to meet"),
                         fieldWithPath("comment").type(JsonFieldType.STRING).description("Arbitrary comment"),
-                        fieldWithPath("publishedAt").type(JsonFieldType.STRING).description("Publishing time"),
+                        fieldWithPath("publishedAt").description("Publishing time"),
                         fieldWithPath("status").type(JsonFieldType.STRING).description("Formal ad status, one of " +
                                 Stream.of(Ad.Status.values()).map(Enum::name).collect(Collectors.joining(", ")))
                 )));
