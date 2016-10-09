@@ -1,0 +1,161 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Currency Black Market - Joker",
+		"_postman_id": "ee0d4a86-341b-8d08-d6a5-8904bdfd0173",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Index",
+			"request": {
+				"url": "http://localhost:8080",
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"type\": \"BUY\",\n  \"amount\": 919191,\n  \"currency\": \"USD\",\n  \"rate\": 20000,\n  \"location\": {\n    \"city\": \"Минск\",\n    \"area\": \"Центральный\"\n  },\n  \"comment\": \"нужны баксы срочно!!! дружище, выручай! в банке не дают!\",\n  \"user\": \"/users/2\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Create Ad",
+			"request": {
+				"url": "http://localhost:8080/ads",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"type\": \"BUY\",\n  \"amount\": 919191,\n  \"currency\": \"USD\",\n  \"rate\": 70,\n  \"location\": {\n    \"city\": \"Санкт-Петербург\",\n    \"area\": \"Пушкинский\"\n  },\n  \"comment\": \"нужны баксы срочно!!! дружище, выручай! в банке не дают!\",\n  \"user\": \"/users/1\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get Ad",
+			"request": {
+				"url": "http://localhost:8080/ads/101",
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"type\": \"BUY\",\n  \"amount\": 919191,\n  \"currency\": \"USD\",\n  \"rate\": 20000,\n  \"location\": {\n    \"city\": \"Минск\",\n    \"area\": \"Центральный\"\n  },\n  \"comment\": \"нужны баксы срочно!!! дружище, выручай! в банке не дают!\",\n  \"user\": \"/users/2\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Update Ad",
+			"request": {
+				"url": "http://localhost:8080/ads/101",
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"type\": \"SELL\",\n  \"amount\": 100000,\n  \"currency\": \"EUR\",\n  \"rate\": 80,\n  \"comment\": \"срочно спихиваю грязную валюту, люблю российский рубль :*\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Ad",
+			"request": {
+				"url": "http://localhost:8080/ads/101",
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Ads",
+			"request": {
+				"url": "http://localhost:8080/ads",
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Publish Ad",
+			"request": {
+				"url": "http://localhost:8080/ads/101/publishing",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Expire Ad",
+			"request": {
+				"url": "http://localhost:8080/ads/101/expiration",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "ALPS",
+			"request": {
+				"url": "http://localhost:8080/profile",
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"type\": \"BUY\",\n  \"amount\": 919191,\n  \"currency\": \"USD\",\n  \"rate\": 20000,\n  \"location\": {\n    \"city\": \"Минск\",\n    \"area\": \"Центральный\"\n  },\n  \"comment\": \"нужны баксы срочно!!! дружище, выручай! в банке не дают!\",\n  \"user\": \"/users/2\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
