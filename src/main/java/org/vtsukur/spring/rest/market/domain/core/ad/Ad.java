@@ -1,10 +1,23 @@
 package org.vtsukur.spring.rest.market.domain.core.ad;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.hateoas.Identifiable;
 import org.vtsukur.spring.rest.market.domain.core.user.User;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.time.LocalDateTime;

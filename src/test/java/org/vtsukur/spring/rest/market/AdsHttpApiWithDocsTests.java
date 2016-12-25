@@ -132,7 +132,7 @@ public class AdsHttpApiWithDocsTests {
         final Ad ad = adRepository.save(ad());
 
         ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders
-                .post("/ads/" + ad.getId() + "/publishing")
+                .put("/ads/" + ad.getId() + "/publishing")
                 .accept(MediaTypes.HAL_JSON)
                 .with(user(userDetailsService.loadUserByUsername(Admin.HONTAREVA))));
 
